@@ -6,7 +6,7 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 13:09:19 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/04 13:12:56 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/04 13:21:10 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ t_vector	vector_scale(float c, t_vector *v)
 {
 	t_vector	ret;
 
-	ret.x = v.x * c;
-  	ret.y = v.y * c;
-	ret.z = v.z * c;
+	ret.x = v->x * c;
+  	ret.y = v->y * c;
+	ret.z = v->z * c;
 	return (ret);
 }
