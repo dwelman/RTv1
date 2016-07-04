@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/01 08:09:54 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/04 11:26:22 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/04 11:32:22 by daviwel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,25 @@
 # define WIN_X 640
 # define WIN_Y 420
 
+typedef struct	s_img
+{
+	void		*img;
+	char		*data;
+	int			bpp;
+	int			s;
+	int			e;
+	char		id;
+	int			x;
+	int			y;
+}				t_img;
+
 typedef struct	s_env
 {
 	void		*mlx;
 	void		*win;
 }				t_env;
 
-void	mlx_image_put_pixel(void *mlx, t_img *i, t_coordint p, t_col *c);
+void			mlx_image_put_pixel(void *mlx, t_img *i, t_coordint p,
+		t_col *c);
 
 #endif
