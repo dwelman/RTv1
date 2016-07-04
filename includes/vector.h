@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 08:31:19 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/04 08:37:01 by daviwel          ###   ########.fr       */
+/*   Updated: 2016/07/04 10:51:16 by daviwel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,11 @@ typedef struct	s_ray
 	t_vector	start;
 	t_vector	dir;
 }				t_ray;
+
+float			vector_dot(t_vector *v1, t_vector *v2);
+
+t_vector		new_vector(float x, float y, float z);
+
+t_vector		vector_sub(t_vector *v1, t_vector *v2);
 
 #endif
