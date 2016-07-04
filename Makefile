@@ -6,7 +6,7 @@
 #    By: daviwel <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/07/01 13:21:50 by daviwel           #+#    #+#              #
-#    Updated: 2016/07/04 10:58:39 by daviwel          ###   ########.fr        #
+#    Updated: 2016/07/04 13:20:21 by ddu-toit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,10 @@ PATH = src/
 SRC = $(PATH)main.c \
 	  $(PATH)vector_dot.c \
 	  $(PATH)vector_new.c \
-	  $(PATH)vector_sub.c
+	  $(PATH)vector_sub.c \
+	  $(PATH)vector_add.c \
+	  $(PATH)vector_scale.c \
+	  $(PATH)mlx_image_put_pixel.c \
 
 OBJ = $(SRC:.c=.o)
 
