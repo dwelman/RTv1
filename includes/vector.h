@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 08:31:19 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/04 10:51:16 by daviwel          ###   ########.fr       */
+/*   Updated: 2016/07/04 13:03:25 by daviwel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct	s_vector
 typedef struct	s_shape
 {
 	t_vector	pos;
+	int			mat_id;
 }				t_shape;
 
 typedef struct	s_sphere
