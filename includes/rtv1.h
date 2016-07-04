@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/01 08:09:54 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/04 08:35:35 by daviwel          ###   ########.fr       */
+/*   Updated: 2016/07/04 10:58:34 by daviwel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <math.h>
-# include "mlx.h"
+# include <mlx.h>
 # include "vector.h"
+# include "../libft/libft.h"
 # define WIN_X 640
 # define WIN_Y 420
 
