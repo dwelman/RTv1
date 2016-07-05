@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector_new.c                                       :+:      :+:    :+:   */
+/*   key_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/07/04 08:31:19 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/04 10:38:12 by daviwel          ###   ########.fr       */
+/*   Created: 2016/07/05 07:35:04 by daviwel           #+#    #+#             */
+/*   Updated: 2016/07/05 07:41:24 by daviwel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
 
-/*
-** Creates a new t_vector and returns a pointer to it.
-*/
-
-t_vector	new_vector(float x, float y, float z)
+int	key_hook(int keycode, t_env *env)
 {
-	t_vector	new;
-
-	new.x = x;
-	new.y = y;
-	new.z = z;
-	return (new);
+	if (keycode == EXIT)
+		exit(0);
+	return (env->img.s);
 }
