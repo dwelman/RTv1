@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/05 08:51:47 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/05 15:18:44 by daviwel          ###   ########.fr       */
+/*   Updated: 2016/07/05 15:40:48 by daviwel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	sphere_raytrace(t_env *env)
                 i = 0;
                 while (i < env->obj.num_spheres)
                 {
-					if (intersect_ray_cylinder(&ray, &env->obj.spheres[i], &t))
+					if (intersect_ray_sphere(&ray, &env->obj.spheres[i], &t))
                             current_sphere = i;
                     i++;
                 }
