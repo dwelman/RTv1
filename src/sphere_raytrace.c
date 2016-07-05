@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/05 08:51:47 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/05 12:47:31 by daviwel          ###   ########.fr       */
+/*   Updated: 2016/07/05 15:18:44 by daviwel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	sphere_raytrace(t_env *env)
 	t_ray	ray;
 	t_col	col;
 	int		level;
-	int		coef;
+	float	coef;
 
 	y = 0;
     while (y <= WIN_Y)
@@ -49,7 +49,7 @@ void	sphere_raytrace(t_env *env)
                 i = 0;
                 while (i < env->obj.num_spheres)
                 {
-					if (intersect_ray_sphere(&ray, &env->obj.spheres[i], &t))
+					if (intersect_ray_cylinder(&ray, &env->obj.spheres[i], &t))
                             current_sphere = i;
                     i++;
                 }
@@ -67,28 +67,51 @@ void	sphere_raytrace(t_env *env)
                 t_material  current_mat = env->obj.mats[env->obj.spheres[current_sphere].shape.material];
                 int j;
 
-                j = -1;
-                while (j++ < env->obj.num_lights)
+                j = 0;
+                while (j < env->obj.num_lights)
                 {
                     t_light current_light = env->obj.lights[j];
                     t_vector    dist = vector_sub(&current_light.pos, &new_start);
                     if (vector_dot(&normal, &dist) < 0.1f)
+					{
+						j++;
                         continue ;
+					}
                     float   t = sqrtf(vector_dot(&dist, &dist));
                     if (t <= 0.0f)
-                    {
+					{
+						j++;
 						continue ;
-                    }
+					}
                     t_ray   light_ray;
                     light_ray.start = new_start;
                     light_ray.dir = vector_scale((1 / t), &dist);
 
-                    float   lambert = vector_dot(&light_ray.dir, &normal) * coef;
-                    col.r += lambert* current_light.intensity.r * current_mat.diffuse.r;
-                    col.g += lambert* current_light.intensity.g * current_mat.diffuse.g;
-                    col.b += lambert* current_light.intensity.b * current_mat.diffuse.b;
+					int		in_shadow;
+					int		k;
+
+					k = 0;
+					in_shadow = 0;
+					while (k < env->obj.num_spheres)
+					{
+						if (intersect_ray_sphere(&light_ray, &env->obj.spheres[k], &t))
+						{
+							in_shadow = 1;
+							break;
+						}
+						k++;
+					}
+					if (in_shadow == 0)
+					{
+                    	float   lambert = vector_dot(&light_ray.dir, &normal) * coef;
+                    	col.r += lambert* current_light.intensity.r * current_mat.diffuse.r;
+                    	col.g += lambert* current_light.intensity.g * current_mat.diffuse.g;
+                    	col.b += lambert* current_light.intensity.b * current_mat.diffuse.b;
+					}
+					j++;
                 }
                 coef *= current_mat.reflection;
+				printf("coef = %f\n", coef);
                 ray.start = new_start;
                 float   reflect = 2.0f * vector_dot(&ray.dir, &normal);
                 t_vector    tmp = vector_scale(reflect, &normal);

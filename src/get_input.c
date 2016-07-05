@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/05 09:29:51 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/05 12:33:45 by daviwel          ###   ########.fr       */
+/*   Updated: 2016/07/05 14:55:43 by daviwel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,25 +74,21 @@ void	fill_materials(t_env *env, int fd)
 	i = 0;
 	while (get_next_line(fd, &line) == 1 && i < env->obj.num_mats)
 	{
-		env->obj.mats[i].diffuse.r = ft_atoi(line);
+		env->obj.mats[i].diffuse.r = 1.0f * ft_atoi(line);
 		if (env->obj.mats[i].diffuse.r != 0)
-			env->obj.mats[i].diffuse.r /= 255.0f;
-		printf("%f\n", env->obj.mats[i].diffuse.r);
+			env->obj.mats[i].diffuse.r /= 255;
 		temp = ft_strchr(line, '*');
-		env->obj.mats[i].diffuse.g = ft_atoi(++temp);
+		env->obj.mats[i].diffuse.g = 1.0f * ft_atoi(++temp);
 		if (env->obj.mats[i].diffuse.g != 0)
-			env->obj.mats[i].diffuse.g /= 255.0f;
-		printf("%f\n", env->obj.mats[i].diffuse.g);
+			env->obj.mats[i].diffuse.g /= 255;
 		temp = ft_strchr(++temp, '*');
-		env->obj.mats[i].diffuse.b = ft_atoi(++temp);
+		env->obj.mats[i].diffuse.b = 1.0f * ft_atoi(++temp);
 		if (env->obj.mats[i].diffuse.b != 0)
-			env->obj.mats[i].diffuse.b /= 255.0f;
-		printf("%f\n", env->obj.mats[i].diffuse.b);
+			env->obj.mats[i].diffuse.b /= 255;
 		temp = ft_strchr(++temp, '*');
-		env->obj.mats[i].reflection = ft_atoi(++temp);
+		env->obj.mats[i].reflection = 1.0f * ft_atoi(++temp);
 		if (env->obj.mats[i].reflection != 0)
 			env->obj.mats[i].reflection /= 10.0f;
-		printf("%f\n", env->obj.mats[i].reflection);
 		i++;
 	}
 }
