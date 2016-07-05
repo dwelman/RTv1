@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 08:31:19 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/05 10:02:36 by daviwel          ###   ########.fr       */
+/*   Updated: 2016/07/05 13:55:58 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,14 @@ typedef struct	s_ray
 	t_vector	start;
 	t_vector	dir;
 }				t_ray;
+
+typedef struct	s_triangle
+{
+	t_shape		shape;
+	t_vector	v1;
+	t_vector	v2;
+	t_vector	v3;
+}				t_triangle;
 
 float			vector_dot(t_vector *v1, t_vector *v2);
 
