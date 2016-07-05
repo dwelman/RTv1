@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/01 08:09:54 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/05 15:19:28 by daviwel          ###   ########.fr       */
+/*   Updated: 2016/07/05 15:50:48 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,7 @@ void			fill_spheres(t_env *env, int fd);
 void			get_input(t_env *env, char *file);
 
 int				intersect_ray_cylinder(t_ray *ray, t_sphere *sphere, float *t);
+
+int				intersect_ray_tri(t_ray *r, t_triangle *tri, double *res, t_vector *n);
 
 #endif
