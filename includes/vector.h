@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 08:31:19 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/05 13:55:58 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/05 15:35:28 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,7 @@ t_vector		vector_sub(t_vector *v1, t_vector *v2);
 t_vector        vector_add(t_vector *v1, t_vector *v2);
 
 t_vector        vector_scale(float c, t_vector *v);
+
+t_vector		vector_cross(t_vector *v1, t_vector *v2);
 
 #endif

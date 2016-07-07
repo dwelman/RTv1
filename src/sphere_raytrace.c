@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/05 08:51:47 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/05 15:40:48 by daviwel          ###   ########.fr       */
+/*   Updated: 2016/07/07 07:00:46 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,47 @@ void	sphere_raytrace(t_env *env)
 	t_col	col;
 	int		level;
 	float	coef;
+	t_triangle	tri;
+
+	tri.v1.x = 70;
+	tri.v1.y = 70;
+	tri.v1.z = -1;
+	tri.v2.x = 70;
+	tri.v2.y = 200;
+	tri.v2.z = -1;
+	tri.v3.x = 200;
+	tri.v3.y = 135;
+	tri.v3.z = -1;
+	tri.shape.material = 1;
+
+/*	double   t = 20000.0f;
+	t_vector 	n;
+	y = 0;
+	ray.dir.x = 0;
+    ray.dir.y = 0;
+    ray.dir.z = 1; 
+    ray.start.z = -10;
+	while (y <= 50)
+	{
+		x = 0;
+		ft_printf("%d\t", y);
+		while (x <= 50)
+		{
+    		ray.start.y = y;
+			ray.start.x = x;
+			if (intersect_ray_tri(&ray, &tri, &t, &n))
+			{
+				ft_printf("++");
+			//	ft_printf("x = %d y = %d\n", x , y);
+			}
+			else
+				ft_printf("--");
+			x++;
+		}
+		ft_printf("\n");
+		y++;
+	}
+*/
 
 	y = 0;
     while (y <= WIN_Y)
@@ -36,7 +77,6 @@ void	sphere_raytrace(t_env *env)
             ray.start.x = x;
             ray.start.y = y;
             ray.start.z = -2000;
-
             ray.dir.x = 0;
             ray.dir.y = 0;
             ray.dir.z = 1;
@@ -45,8 +85,16 @@ void	sphere_raytrace(t_env *env)
                 float   t = 20000.0f;
                 int     current_sphere = -1;
                 int     i;
+				double		res;
+				t_vector	n;
 
                 i = 0;
+				if (intersect_ray_tri(&ray, &tri, &res, &n))
+				{
+            		env->img.data[(x + y * WIN_X) * 4 + 0] = (unsigned char)255;
+            		env->img.data[(x + y * WIN_X) * 4 + 1] = (unsigned char)255;
+            		env->img.data[(x + y * WIN_X) * 4 + 2] = (unsigned char)255;
+				}
                 while (i < env->obj.num_spheres)
                 {
 					if (intersect_ray_sphere(&ray, &env->obj.spheres[i], &t))
@@ -111,7 +159,7 @@ void	sphere_raytrace(t_env *env)
 					j++;
                 }
                 coef *= current_mat.reflection;
-				printf("coef = %f\n", coef);
+				//printf("coef = %f\n", coef);
                 ray.start = new_start;
                 float   reflect = 2.0f * vector_dot(&ray.dir, &normal);
                 t_vector    tmp = vector_scale(reflect, &normal);
@@ -134,11 +182,12 @@ void	sphere_raytrace(t_env *env)
                 temp.b = col.b * 255.0f;
             else
                 temp.b = 255.0f;
-            env->img.data[(x + y * WIN_X) * 4 + 0] = (unsigned char)temp.r;
-            env->img.data[(x + y * WIN_X) * 4 + 1] = (unsigned char)temp.g;
-            env->img.data[(x + y * WIN_X) * 4 + 2] = (unsigned char)temp.b;
+			env->img.data[(x + y * WIN_X) * 4 + 0] = (unsigned char)temp.r;
+			env->img.data[(x + y * WIN_X) * 4 + 1] = (unsigned char)temp.g;
+			env->img.data[(x + y * WIN_X) * 4 + 2] = (unsigned char)temp.b;
             x++;
         }
+//		ft_printf("\n");
         y++;
     }
 }

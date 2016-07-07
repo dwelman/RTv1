@@ -6,7 +6,7 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 08:26:31 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/04 09:59:13 by daviwel          ###   ########.fr       */
+/*   Updated: 2016/07/05 16:21:30 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_vector	vector_sub(t_vector *v1, t_vector *v2)
 {
 	t_vector	ret;
 
-	ret = new_vector(v1->x - v2->x, v1->y - v2->y, v1->z - v2->z);
+	ret.x = v1->x - v2->x;
+	ret.y = v1->y - v2->y;
+	ret.z = v1->z - v2->z;
 	return (ret);
 }
