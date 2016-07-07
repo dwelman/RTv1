@@ -1,86 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sphere_raytrace.c                                  :+:      :+:    :+:   */
+/*   raytrace.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/07/05 08:51:47 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/07 07:16:32 by ddu-toit         ###   ########.fr       */
+/*   Created: 2016/07/07 07:24:50 by ddu-toit          #+#    #+#             */
+/*   Updated: 2016/07/07 07:34:03 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
 
-void	sphere_raytrace(t_env *env)
+t_col	shoot_ray(int level, t_env *env)
 {
-	int		x;
-	int		y;
-	t_ray	ray;
-	t_col	col;
-	int		level;
 	float	coef;
-	t_triangle	tri;
-
-	tri.v1.x = 70;
-	tri.v1.y = 70;
-	tri.v1.z = -1;
-	tri.v2.x = 70;
-	tri.v2.y = 200;
-	tri.v2.z = -1;
-	tri.v3.x = 200;
-	tri.v3.y = 135;
-	tri.v3.z = -1;
-	tri.shape.material = 1;
-
-/*	double   t = 20000.0f;
-	t_vector 	n;
-	y = 0;
-	ray.dir.x = 0;
-    ray.dir.y = 0;
-    ray.dir.z = 1; 
-    ray.start.z = -10;
-	while (y <= 50)
-	{
-		x = 0;
-		ft_printf("%d\t", y);
-		while (x <= 50)
-		{
-    		ray.start.y = y;
-			ray.start.x = x;
-			if (intersect_ray_tri(&ray, &tri, &t, &n))
-			{
-				ft_printf("++");
-			//	ft_printf("x = %d y = %d\n", x , y);
-			}
-			else
-				ft_printf("--");
-			x++;
-		}
-		ft_printf("\n");
-		y++;
-	}
-*/
-
-	y = 0;
-    while (y <= WIN_Y)
-    {
-        x = 0;
-        while (x <= WIN_X)
-        {
-            col.r = 0;
-            col.g = 0;
-            col.b = 0;
-            level = 0;
-            coef = 1.0;
-
-            ray.start.x = x;
-            ray.start.y = y;
-            ray.start.z = -2000;
-            ray.dir.x = 0;
-            ray.dir.y = 0;
-            ray.dir.z = 1;
-            while (coef > 0.0f && level < 15)
+	t_ray	ray;
+	
+	while (coef > 0.0f && level < 15)
            {
                 float		t = 20000.0f;
                 int			current_sphere = -1;
@@ -166,7 +103,35 @@ void	sphere_raytrace(t_env *env)
                 ray.dir = vector_sub(&ray.dir, &tmp);
                 level++;
             }
-            t_col temp;
+	return (col);
+
+}
+
+void	raytrace(t_env *env, int level)
+{
+	int		x;
+	int		y;
+	t_ray	ray;
+
+	y = 0;
+
+    while (y <= WIN_Y)
+    {
+        x = 0;
+        while (x <= WIN_X)
+        {
+            col.r = 0;
+            col.g = 0;
+            col.b = 0;
+            coef = 1.0;
+            ray.start.x = x;
+            ray.start.y = y;
+            ray.start.z = -2000;
+            ray.dir.x = 0;
+            ray.dir.y = 0;
+            ray.dir.z = 1;
+			col = shoot_ray(ray);
+	        t_col temp;
             t_vector v;
             v.x =  x;
             v.y = y;
@@ -191,3 +156,69 @@ void	sphere_raytrace(t_env *env)
         y++;
     }
 }
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sphere_raytrace.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/07/05 08:51:47 by daviwel           #+#    #+#             */
+/*   Updated: 2016/07/07 07:16:32 by ddu-toit         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../includes/rtv1.h"
+
+void	sphere_raytrace(t_env *env)
+{
+	int		x;
+	int		y;
+	t_ray	ray;
+	t_col	col;
+	int		level;
+	float	coef;
+	t_triangle	tri;
+
+	tri.v1.x = 70;
+	tri.v1.y = 70;
+	tri.v1.z = -1;
+	tri.v2.x = 70;
+	tri.v2.y = 200;
+	tri.v2.z = -1;
+	tri.v3.x = 200;
+	tri.v3.y = 135;
+	tri.v3.z = -1;
+	tri.shape.material = 1;
+
+/*	double   t = 20000.0f;
+	t_vector 	n;
+	y = 0;
+	ray.dir.x = 0;
+    ray.dir.y = 0;
+    ray.dir.z = 1; 
+    ray.start.z = -10;
+	while (y <= 50)
+	{
+		x = 0;
+		ft_printf("%d\t", y);
+		while (x <= 50)
+		{
+    		ray.start.y = y;
+			ray.start.x = x;
+			if (intersect_ray_tri(&ray, &tri, &t, &n))
+			{
+				ft_printf("++");
+			//	ft_printf("x = %d y = %d\n", x , y);
+			}
+			else
+				ft_printf("--");
+			x++;
+		}
+		ft_printf("\n");
+		y++;
+	}
+*/
+
+

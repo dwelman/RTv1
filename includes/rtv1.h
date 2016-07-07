@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/01 08:09:54 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/05 15:50:48 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/07 09:59:13 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ typedef struct	s_obj
 	t_light		*lights;
 	int			num_spheres;
 	t_sphere	*spheres;
+	int			num_tri;
+	t_triangle	*triangles;
+	int			cur_sphere;
+	int			cur_tri;
 }				t_obj;
 
 typedef struct	s_env
@@ -78,9 +82,23 @@ void			sphere_raytrace(t_env *env);
 
 int				intersect_ray_sphere(t_ray *ray, t_sphere *sphere, float *t);
 
+/*
+** File Input
+*/
+
+void			fill_materials(t_env *env, int fd);
+
+void			fill_lights(t_env *env, int fd);
+
 void			fill_spheres(t_env *env, int fd);
 
+void			fill_triangles(t_env *env, int fd);
+
 void			get_input(t_env *env, char *file);
+
+/*
+** Primitive Intersection
+*/
 
 int				intersect_ray_cylinder(t_ray *ray, t_sphere *sphere, float *t);
 
