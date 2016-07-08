@@ -6,7 +6,7 @@
 #    By: daviwel <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/07/01 13:21:50 by daviwel           #+#    #+#              #
-#    Updated: 2016/07/07 09:57:00 by ddu-toit         ###   ########.fr        #
+#    Updated: 2016/07/08 18:09:26 by ddu-toit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,14 +25,15 @@ SRC = $(PATH)main.c \
 	  $(PATH)key_hook.c \
 	  $(PATH)close_window.c \
 	  $(PATH)intersect_ray_trace.c \
-	  $(PATH)sphere_raytrace.c \
 	  $(PATH)get_input.c \
 	  $(PATH)fill_spheres.c\
-	  $(PATH)intersect_triangle.c\
 	  $(PATH)fill_triangles.c\
 	  $(PATH)fill_lights.c\
 	  $(PATH)fill_materials.c\
-#	  $(PATH)raytrace.c\
+	  $(PATH)raytrace.c\
+	  $(PATH)light.c\
+	  $(PATH)set_structs.c\
+	  $(PATH)new_triangle.c\
 
 OBJ = $(SRC:.c=.o)
 

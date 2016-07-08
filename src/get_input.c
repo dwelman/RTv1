@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/05 09:29:51 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/07 10:25:10 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/08 13:32:14 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,21 @@ int		set_temp(int fd)
 	temp++;
 	val = ft_atoi(temp);
 	free(line);
-	return(val);
+	return (val);
 }
 
 void	set_arrays(t_env *env, int fd)
-{	
-	env->obj.num_mats = set_temp(fd);
-	env->obj.num_lights = set_temp(fd);
-	env->obj.num_spheres = set_temp(fd);
-	env->obj.num_tri = set_temp(fd);
-	env->obj.mats = (t_material *)malloc(sizeof(t_material) *
+{
+	OBJ.num_mats = set_temp(fd);
+	OBJ.num_lights = set_temp(fd);
+	OBJ.num_spheres = set_temp(fd);
+	OBJ.num_tri = set_temp(fd);
+	OBJ.mats = (t_material *)malloc(sizeof(t_material) *
 			env->obj.num_mats);
-	env->obj.lights = (t_light *)malloc(sizeof(t_light) * env->obj.num_lights);
-	env->obj.spheres = (t_sphere *)malloc(sizeof(t_sphere)
-			* env->obj.num_spheres);
-	env->obj.triangles = (t_triangle*)malloc(sizeof(t_triangle) * env->obj.num_tri);
+	OBJ.lights = (t_light *)malloc(sizeof(t_light) * OBJ.num_lights);
+	OBJ.spheres = (t_sphere *)malloc(sizeof(t_sphere)
+			* OBJ.num_spheres);
+	OBJ.triangles = (t_triangle*)malloc(sizeof(t_triangle) * OBJ.num_tri);
 }
 
 /*

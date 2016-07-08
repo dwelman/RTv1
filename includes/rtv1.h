@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/01 08:09:54 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/07 09:59:13 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/08 18:07:59 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,18 @@
 # define WIN_X 800
 # define WIN_Y 600
 # define EXIT 53
+# define OBJ env->obj
+# define SPHERES env->obj.spheres
+# define TRI env->obj.triangles
+# define SP_POS(X) SPHERES[X].shape.pos
+# define TR_POS(X) TRI[X].shape.pos
+# define ABSV(X) sqrt(vector_dot(&X, &X))
+
+enum
+{
+	SPHERE = 1,
+	TRIANGLE
+};
 
 typedef struct	s_img
 {
@@ -49,6 +61,11 @@ typedef struct	s_obj
 	t_triangle	*triangles;
 	int			cur_sphere;
 	int			cur_tri;
+	t_material	cur_mat;
+	t_vector	normal;
+	t_vector	new_start;
+	t_col		col;
+	int			active_shape;
 }				t_obj;
 
 typedef struct	s_env
@@ -71,8 +88,24 @@ typedef struct	s_ray_sphere
 	t_vector	dist;
 }				t_ray_sphere;
 
+typedef struct	s_ray_tri
+{
+	float		d;
+	float		inv_d;
+	double		u;
+	double		v;
+	double		tmp;
+	t_vector	e1;
+	t_vector	e2;
+	t_vector	s1;
+	t_vector	s2;
+	t_vector	s3;
+}				t_ray_tri;
+
 void			mlx_image_put_pixel(void *mlx, t_img *i, t_vector p,
 		t_col *c);
+
+void			set_tri_pos(t_triangle *tri);
 
 int				key_hook(int keycode, t_env *env);
 
@@ -97,11 +130,15 @@ void			fill_triangles(t_env *env, int fd);
 void			get_input(t_env *env, char *file);
 
 /*
-** Primitive Intersection
+** Primitive Intersection & raytracing
 */
+
+void  			calc_lighting(t_env *env, float coef);
+
+void			raytrace(t_env *env);
 
 int				intersect_ray_cylinder(t_ray *ray, t_sphere *sphere, float *t);
 
-int				intersect_ray_tri(t_ray *r, t_triangle *tri, double *res, t_vector *n);
+int				intersect_ray_tri(t_ray *r, t_triangle *tri, float *res, t_vector *n);
 
 #endif

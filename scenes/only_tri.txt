@@ -1,7 +1,7 @@
 # Comment lines to be prefixed with '#'
 materials:4
 lights:3
-spheres:4
+spheres:0
 triangles:1
 # Materials r[0-255] g[0-255] b[0-255] *[reflection]
 1 r210 g255 b0   *2
@@ -13,9 +13,5 @@ triangles:1
 (x3200 ; y3000 ; z-1000) r180 g190 b255
 (x600 ; y0 ; z-100) r128 g150 b255
 # Spheres
-x200 y300 z0 r150 m0
-x400 y400 z0 r50 m1
-x500 y140 z0 r100 m2
-x400 y250 z1000 r400 m3
 # Triangles 
 v1(x20y20z0), v2(x200y20z0), v3(x100y400z0) m2

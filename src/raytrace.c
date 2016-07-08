@@ -6,219 +6,144 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/07 07:24:50 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/07 07:34:03 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/08 18:10:12 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
 
-t_col	shoot_ray(int level, t_env *env)
+/*
+** Calculate ray - primitive intesection.
+*/
+
+void			get_intersections(t_env *env, t_ray ray, float *t)
 {
-	float	coef;
-	t_ray	ray;
-	
-	while (coef > 0.0f && level < 15)
-           {
-                float		t = 20000.0f;
-                int			current_sphere = -1;
-                int     	i;
-				double		res;
-				t_vector	n;
+	int			i;
+	t_vector	n;
 
-                i = 0;
-				if (intersect_ray_tri(&ray, &tri, &res, &n))
-				{
-            		env->img.data[(x + y * WIN_X) * 4 + 0] -= (unsigned char)255;
-            		env->img.data[(x + y * WIN_X) * 4 + 1] -= (unsigned char)255;
-            		env->img.data[(x + y * WIN_X) * 4 + 2] -= (unsigned char)255;
-				}
-                while (i < env->obj.num_spheres)
-                {
-					if (intersect_ray_sphere(&ray, &env->obj.spheres[i], &t))
-                            current_sphere = i;
-                    i++;
-                }
-                if (current_sphere == -1)
-                    break ;
-                t_vector    scaled = vector_scale(t, &ray.dir);
-                t_vector    new_start = vector_add(&ray.start, &scaled);
-                t_vector    normal = vector_sub(&new_start, &env->obj.spheres[current_sphere].shape.pos);
-                float       temp = vector_dot(&normal, &normal);
-
-                if (temp == 0)
-                    break ;
-                temp = 1.0f / sqrt(temp);
-                normal = vector_scale(temp, &normal);
-                t_material  current_mat = env->obj.mats[env->obj.spheres[current_sphere].shape.material];
-                int j;
-
-                j = 0;
-                while (j < env->obj.num_lights)
-                {
-                    t_light current_light = env->obj.lights[j];
-                    t_vector    dist = vector_sub(&current_light.pos, &new_start);
-                    if (vector_dot(&normal, &dist) < 0.1f)
-					{
-						j++;
-                        continue ;
-					}
-                    float   t = sqrtf(vector_dot(&dist, &dist));
-                    if (t <= 0.0f)
-					{
-						j++;
-						continue ;
-					}
-                    t_ray   light_ray;
-                    light_ray.start = new_start;
-                    light_ray.dir = vector_scale((1 / t), &dist);
-
-					int		in_shadow;
-					int		k;
-
-					k = 0;
-					in_shadow = 0;
-					while (k < env->obj.num_spheres)
-					{
-						if (intersect_ray_sphere(&light_ray, &env->obj.spheres[k], &t))
-						{
-							in_shadow = 1;
-							break;
-						}
-						k++;
-					}
-					if (in_shadow == 0)
-					{
-                    	float   lambert = vector_dot(&light_ray.dir, &normal) * coef;
-                    	col.r += lambert* current_light.intensity.r * current_mat.diffuse.r;
-                    	col.g += lambert* current_light.intensity.g * current_mat.diffuse.g;
-                    	col.b += lambert* current_light.intensity.b * current_mat.diffuse.b;
-					}
-					j++;
-                }
-                coef *= current_mat.reflection;
-				//printf("coef = %f\n", coef);
-                ray.start = new_start;
-                float   reflect = 2.0f * vector_dot(&ray.dir, &normal);
-                t_vector    tmp = vector_scale(reflect, &normal);
-                ray.dir = vector_sub(&ray.dir, &tmp);
-                level++;
-            }
-	return (col);
-
+	i = 0;
+	OBJ.cur_sphere = -1;
+	while (i < OBJ.num_spheres)
+	{
+		if (intersect_ray_sphere(&ray, &OBJ.spheres[i], t))
+			OBJ.cur_sphere = i;
+		i++;
+	}
+	i = 0;
+	OBJ.cur_tri = -1;
+	while (i < OBJ.num_tri)
+	{
+		if (intersect_ray_tri(&ray, &env->obj.triangles[i], t, &n))
+		{
+			OBJ.cur_tri = i;
+			OBJ.cur_sphere = -1;
+		}
+		i++;
+	}
 }
 
-void	raytrace(t_env *env, int level)
+/*
+** Reflect ray around normal.
+*/
+
+static t_vector		reflect_ray(t_env *env, t_ray *ray)
 {
-	int		x;
-	int		y;
-	t_ray	ray;
+	float		reflect;
+	t_vector	tmp;
+	t_vector	new_dir;
 
-	y = 0;
-
-    while (y <= WIN_Y)
-    {
-        x = 0;
-        while (x <= WIN_X)
-        {
-            col.r = 0;
-            col.g = 0;
-            col.b = 0;
-            coef = 1.0;
-            ray.start.x = x;
-            ray.start.y = y;
-            ray.start.z = -2000;
-            ray.dir.x = 0;
-            ray.dir.y = 0;
-            ray.dir.z = 1;
-			col = shoot_ray(ray);
-	        t_col temp;
-            t_vector v;
-            v.x =  x;
-            v.y = y;
-            if (col.r * 255.0f < 255.0f)
-                temp.r = col.r * 255.0f;
-            else
-                temp.r = 255.0f;
-            if (col.g * 255.0f < 255.0f)
-                temp.g = col.g * 255.0f;
-			else
-                temp.g = 255.0f;
-            if (col.b * 255.0f < 255.0f)
-                temp.b = col.b * 255.0f;
-            else
-                temp.b = 255.0f;
-			env->img.data[(x + y * WIN_X) * 4 + 0] = (unsigned char)temp.r;
-			env->img.data[(x + y * WIN_X) * 4 + 1] = (unsigned char)temp.g;
-			env->img.data[(x + y * WIN_X) * 4 + 2] = (unsigned char)temp.b;
-            x++;
-        }
-//		ft_printf("\n");
-        y++;
-    }
+	ray->start = OBJ.new_start;
+	reflect = 2.0f * vector_dot(&ray->dir, &OBJ.normal);
+	tmp = vector_scale(reflect, &OBJ.normal);
+	ray->dir = vector_sub(&ray->dir, &tmp);
+	return (new_dir);
 }
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   sphere_raytrace.c                                  :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/07/05 08:51:47 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/07 07:16:32 by ddu-toit         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+/*
+** Shoot ray and calculate color value based on reflection, shadows
+** and materials.
+*/
 
-#include "../includes/rtv1.h"
+static t_col		shoot_ray(t_ray ray, int level_max, t_env *env)
+{
+	float		coef;
+	float		t;
+	t_vector	scaled;
 
-void	sphere_raytrace(t_env *env)
+	coef = 1.0;
+	set_col(&OBJ.col, 0, 0, 0);
+	while (coef > 0.0f && level_max--)
+	{
+		t = 20000.0f;
+		env->obj.cur_sphere = -1;
+		get_intersections(env, ray, &t);
+		if (OBJ.cur_sphere == -1)
+			break ;
+		scaled = vector_scale(t, &ray.dir);
+		OBJ.new_start = vector_add(&ray.start, &scaled);
+		OBJ.normal = vector_sub(&OBJ.new_start, &SP_POS(OBJ.cur_sphere));
+		OBJ.normal = TR_POS(OBJ.cur_tri);
+		if (vector_dot(&OBJ.normal, &OBJ.normal) == 0)
+			break ;
+		OBJ.normal = vector_scale(1.0f / ABSV(OBJ.normal), &OBJ.normal);
+		OBJ.cur_mat = env->obj.mats[SPHERES[OBJ.cur_sphere].shape.material];
+		OBJ.cur_mat = env->obj.mats[TRI[OBJ.cur_tri].shape.material];
+		calc_lighting(env, coef);
+		coef *= OBJ.cur_mat.reflection;
+		reflect_ray(env, &ray);
+	}
+	return (OBJ.col);
+}
+
+/*
+** Save color value to image.
+*/
+
+static void			save_to_img(t_env *env, t_col col, int x, int y)
+{
+	t_col temp;
+
+	if (col.r * 255.0f < 255.0f)
+		temp.r = col.r * 255.0f;
+	else
+		temp.r = 255.0f;
+	if (col.g * 255.0f < 255.0f)
+		temp.g = col.g * 255.0f;
+	else
+		temp.g = 255.0f;
+	if (col.b * 255.0f < 255.0f)
+		temp.b = col.b * 255.0f;
+	else
+		temp.b = 255.0f;
+	env->img.data[(x + y * WIN_X) * 4 + 0] = (unsigned char)temp.r;
+	env->img.data[(x + y * WIN_X) * 4 + 1] = (unsigned char)temp.g;
+	env->img.data[(x + y * WIN_X) * 4 + 2] = (unsigned char)temp.b;
+}
+
+/*
+** Iterate through each pixel, shoot ray into scene for each and save returned
+** colour value to image.
+*/
+
+void				raytrace(t_env *env)
 {
 	int		x;
 	int		y;
 	t_ray	ray;
 	t_col	col;
-	int		level;
-	float	coef;
-	t_triangle	tri;
 
-	tri.v1.x = 70;
-	tri.v1.y = 70;
-	tri.v1.z = -1;
-	tri.v2.x = 70;
-	tri.v2.y = 200;
-	tri.v2.z = -1;
-	tri.v3.x = 200;
-	tri.v3.y = 135;
-	tri.v3.z = -1;
-	tri.shape.material = 1;
-
-/*	double   t = 20000.0f;
-	t_vector 	n;
 	y = 0;
-	ray.dir.x = 0;
-    ray.dir.y = 0;
-    ray.dir.z = 1; 
-    ray.start.z = -10;
-	while (y <= 50)
+	while (y <= WIN_Y)
 	{
 		x = 0;
-		ft_printf("%d\t", y);
-		while (x <= 50)
+		while (x <= WIN_X)
 		{
-    		ray.start.y = y;
-			ray.start.x = x;
-			if (intersect_ray_tri(&ray, &tri, &t, &n))
-			{
-				ft_printf("++");
-			//	ft_printf("x = %d y = %d\n", x , y);
-			}
-			else
-				ft_printf("--");
+			ray.start = new_vector(x, y, -2000);
+			ray.dir = new_vector(0, 0, 1);
+			col = shoot_ray(ray, 5, env);
+			save_to_img(env, col, x, y);
 			x++;
 		}
-		ft_printf("\n");
 		y++;
 	}
-*/
-
-
+}

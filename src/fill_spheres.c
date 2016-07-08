@@ -6,21 +6,21 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/05 11:09:03 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/07 10:23:15 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/08 13:30:38 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
 
-static char 	*set_temp(char *ptr, char c)
+static char		*set_temp(char *ptr, char c)
 {
 	char	*temp;
 
 	temp = ft_strchr(ptr, c);
 	if (temp == NULL)
 	{
-		 ft_putstr_fd("File input error - Problem reading sphere data\n", 2);
-		 exit(-1);
+		ft_putstr_fd("File input error - Problem reading sphere data\n", 2);
+		exit(-1);
 	}
 	return (temp);
 }

@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colours.h                                          :+:      :+:    :+:   */
+/*   set_structs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/07/04 08:59:41 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/08 12:29:01 by ddu-toit         ###   ########.fr       */
+/*   Created: 2016/07/08 12:24:33 by ddu-toit          #+#    #+#             */
+/*   Updated: 2016/07/08 12:31:46 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLOURS_H
-# define COLOURS_H
+#include "../includes/rtv1.h"
 
-typedef struct	s_col
+void	set_col(t_col *col, float r, float g, float b)
 {
-	float	r;
-	float	g;
-	float	b;
-}				t_col;
-
-typedef struct	s_material
-{
-	t_col		diffuse;
-	float		reflection;
-}				t_material;
-
-void    set_col(t_col *col, float r, float g, float b);
-
-#endif
+	col->r = r;
+	col->g = g;
+	col->b = b;
+}
