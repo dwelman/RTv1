@@ -6,12 +6,49 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/08 14:02:18 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/08 18:08:54 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/11 16:54:58 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
 
+int	intersect_ray_cylinder(t_ray *ray, t_cylinder *cyl, float *t)
+{
+	float		a;
+	float		b;
+	float		c;
+	float		t1;
+	float		t2;
+	float		disc;
+	t_vector	dist;
+
+	dist = vector_sub(&ray->start, &cyl->center);
+	a = SQR(ray->dir.x) + SQR(ray->dir.y);
+	b = 2 * (dist.x * ray->dir.x + 2 * dist.z * ray->dir.z);//b = 2xExD + 2yEyD
+	c = SQR(dist.x) + SQR(dist.z) - 1.0f; //c = xE^2 +yE^2 - 1
+//	printf("a = %f b = %f, c = %f\n", a, b, c);
+	disc = SQR(b) - (4 * a * c);
+//	printf("disc %f\n", disc);
+	if (disc < 0)
+		return (0);
+	else
+	{
+		t1 = -b + sqrtf(SQR(b) - 4 * a * c) / 2 * a;
+		t2 = -b - sqrtf(SQR(b) - 4 * a * c) / 2 * a;
+		printf("t1 = %f t2 = %f\n", t1, t2);
+		if (t1 > t2)
+			t1 = t2;
+		if ((t1 > 0.001) && (t1 < *t))
+		{
+			*t = t1;
+			return (1);
+		}
+		else
+			return (0);
+	}
+}
+
+/*
 int	intersect_ray_cylinder(t_ray *ray, t_sphere *sphere, float *t)
 {
 	t_ray_sphere	rs;
@@ -43,7 +80,7 @@ int	intersect_ray_cylinder(t_ray *ray, t_sphere *sphere, float *t)
 			return (0);
 	}
 }
-
+*/
 int	intersect_ray_sphere(t_ray *ray, t_sphere *sphere, float *t)
 {
 	t_ray_sphere	rs;
@@ -99,7 +136,7 @@ int	intersect_ray_tri(t_ray *ray, t_triangle *tri, float *res, t_vector *n)
 	r.tmp = vector_dot(&r.e2, &r.s3) * r.inv_d;
 	if (r.tmp < 0.000001)
 		return (0);
-	*res = r.tmp - 0.005;
+	*res = r.tmp - 0.05;
 	*n = vector_cross(&r.e2, &r.e1);
 	return (1);
 }

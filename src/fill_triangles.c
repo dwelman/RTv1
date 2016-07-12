@@ -6,7 +6,7 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/07 07:40:39 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/08 15:48:18 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/11 08:45:50 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void		fill_triangles(t_env *env, int fd)
 			temp = ft_strchr(++temp, 'm');
 			v_read_err(temp);
 			OBJ.triangles[i].shape.material = ft_atoi(++temp);
+			i++;
 		}
 		free(line);
 	}

@@ -6,12 +6,22 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/01 08:32:34 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/07 13:17:03 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/12 06:38:06 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
 #include <libc.h>
+
+int		temp(t_env *env , int x, int y)
+{
+	ft_printf("derp");
+	void	*ffs;
+
+	printf("Mouse event x = %d y = %d\n",  x, y);
+	ffs = env->win;
+	return (1);
+}
 
 int	main(int argc, char **argv)
 {
@@ -31,6 +41,7 @@ int	main(int argc, char **argv)
 	raytrace(&env);	
 	mlx_put_image_to_window(env.mlx, env.win, env.img.img, 0 , 0);
 	mlx_key_hook(env.win, key_hook, &env);
+	mlx_mouse_hook(env.win, temp, &env);
 	mlx_hook(env.win, 17, 0L, &close_window, &env);
 	mlx_loop(env.mlx);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 08:31:19 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/05 15:35:28 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/11 10:20:36 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct	s_vector
 
 typedef struct	s_shape
 {
+	float		dist;
 	t_vector	pos;
 	int			material;
 }				t_shape;
@@ -41,10 +42,18 @@ typedef struct	s_ray
 typedef struct	s_triangle
 {
 	t_shape		shape;
+	t_vector	normal;
 	t_vector	v1;
 	t_vector	v2;
 	t_vector	v3;
 }				t_triangle;
+
+typedef struct	s_cylinder
+{
+	t_vector	center;
+	float		radius;
+	t_shape		shape;
+}				t_cylinder;
 
 float			vector_dot(t_vector *v1, t_vector *v2);
 
@@ -57,5 +66,7 @@ t_vector        vector_add(t_vector *v1, t_vector *v2);
 t_vector        vector_scale(float c, t_vector *v);
 
 t_vector		vector_cross(t_vector *v1, t_vector *v2);
+
+float			vector_dist(t_vector *v1, t_vector *v2);
 
 #endif

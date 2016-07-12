@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/05 09:29:51 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/08 13:32:14 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/11 10:20:59 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,14 @@ void	set_arrays(t_env *env, int fd)
 	OBJ.num_lights = set_temp(fd);
 	OBJ.num_spheres = set_temp(fd);
 	OBJ.num_tri = set_temp(fd);
+	OBJ.num_cyl = set_temp(fd);
 	OBJ.mats = (t_material *)malloc(sizeof(t_material) *
 			env->obj.num_mats);
 	OBJ.lights = (t_light *)malloc(sizeof(t_light) * OBJ.num_lights);
 	OBJ.spheres = (t_sphere *)malloc(sizeof(t_sphere)
 			* OBJ.num_spheres);
 	OBJ.triangles = (t_triangle*)malloc(sizeof(t_triangle) * OBJ.num_tri);
+	OBJ.cylinders = (t_cylinder*)malloc(sizeof(t_cylinder) * OBJ.num_cyl);
 }
 
 /*
@@ -71,4 +73,5 @@ void	get_input(t_env *env, char *file)
 	fill_lights(env, fd);
 	fill_spheres(env, fd);
 	fill_triangles(env, fd);
+	fill_cylinders(env, fd);
 }

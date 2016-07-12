@@ -6,7 +6,7 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/07 07:24:50 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/08 18:10:12 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/12 06:56:09 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,76 @@
 void			get_intersections(t_env *env, t_ray ray, float *t)
 {
 	int			i;
+	float		t1 = *t;
+	float		t2 = *t;
+	//float		t3 = *t;
 	t_vector	n;
+	t_vector	scaled;
+	t_vector	ns;
+	//t_vector	nc;
 
 	i = 0;
 	OBJ.cur_sphere = -1;
+	float ref_dist = 3.402823e+38;
 	while (i < OBJ.num_spheres)
 	{
-		if (intersect_ray_sphere(&ray, &OBJ.spheres[i], t))
-			OBJ.cur_sphere = i;
+		if (intersect_ray_sphere(&ray, &OBJ.spheres[i], &t1))
+		{
+			scaled = vector_scale(t1, &ray.dir);
+			ns = vector_add(&ray.start, &scaled);
+			SPHERES[i].shape.dist = vector_dist(&ns, &ray.start);
+			if (SPHERES[i].shape.dist < ref_dist)
+			{
+				*t = t1;
+				ref_dist = SPHERES[i].shape.dist;
+				OBJ.cur_sphere = i;
+			}
+		}
 		i++;
 	}
 	i = 0;
 	OBJ.cur_tri = -1;
 	while (i < OBJ.num_tri)
 	{
-		if (intersect_ray_tri(&ray, &env->obj.triangles[i], t, &n))
+		if (intersect_ray_tri(&ray, &OBJ.triangles[i], &t2, &n))
 		{
-			OBJ.cur_tri = i;
-			OBJ.cur_sphere = -1;
+			scaled = vector_scale(t2, &ray.dir);
+			ns = vector_add(&ray.start, &scaled);
+			TRI[i].shape.dist = vector_dist(&ns, &ray.start);
+			if (TRI[i].shape.dist < ref_dist)
+			{
+				*t = t2;
+				ref_dist = TRI[i].shape.dist;
+				OBJ.cur_tri = i;
+				TRI[i].normal = n;
+				OBJ.cur_sphere = -1;
+			}
 		}
 		i++;
 	}
+	i = 0;
+	OBJ.cur_cyl = -1;
+/*	while (i < OBJ.num_cyl)
+	{
+		if (intersect_ray_cylinder(&ray, &CYLINDERS[i], &t3))
+		{
+			scaled = vector_scale(t3, &ray.dir);
+			nc = vector_add(&ray.start, &scaled);
+			printf("INTERSECT CYL AT %f %f %f\n", nc.x, nc.y, nc.z);
+			CYLINDERS[i].shape.dist = vector_dist(&nc, &ray.start);
+			if (CYLINDERS[i].shape.dist < ref_dist)
+			{
+				*t = t3;
+				ref_dist = CYLINDERS[i].shape.dist;
+//				ft_printf("segslel\n");
+				OBJ.cur_cyl = i;
+				OBJ.cur_sphere = -1;
+				OBJ.cur_tri = -1;
+			}
+		}
+		i++;
+	}*/
+
 }
 
 /*
@@ -75,19 +124,40 @@ static t_col		shoot_ray(t_ray ray, int level_max, t_env *env)
 	while (coef > 0.0f && level_max--)
 	{
 		t = 20000.0f;
-		env->obj.cur_sphere = -1;
 		get_intersections(env, ray, &t);
-		if (OBJ.cur_sphere == -1)
-			break ;
-		scaled = vector_scale(t, &ray.dir);
-		OBJ.new_start = vector_add(&ray.start, &scaled);
-		OBJ.normal = vector_sub(&OBJ.new_start, &SP_POS(OBJ.cur_sphere));
-		OBJ.normal = TR_POS(OBJ.cur_tri);
-		if (vector_dot(&OBJ.normal, &OBJ.normal) == 0)
-			break ;
-		OBJ.normal = vector_scale(1.0f / ABSV(OBJ.normal), &OBJ.normal);
-		OBJ.cur_mat = env->obj.mats[SPHERES[OBJ.cur_sphere].shape.material];
-		OBJ.cur_mat = env->obj.mats[TRI[OBJ.cur_tri].shape.material];
+		if (OBJ.cur_sphere != -1)
+		{
+			scaled = vector_scale(t, &ray.dir);
+			OBJ.new_start = vector_add(&ray.start, &scaled);
+			OBJ.normal = vector_sub(&OBJ.new_start, &SP_POS(OBJ.cur_sphere));
+			if (vector_dot(&OBJ.normal, &OBJ.normal) == 0)
+				break ;
+			OBJ.normal = vector_scale(1.0f / ABSV(OBJ.normal), &OBJ.normal);
+			OBJ.cur_mat = env->obj.mats[SPHERES[OBJ.cur_sphere].shape.material];
+		}
+		else if (OBJ.cur_tri != -1)
+		{
+			scaled = vector_scale(t, &ray.dir);
+			OBJ.new_start = vector_add(&ray.start, &scaled);
+			OBJ.normal = TRI[OBJ.cur_tri].normal;
+			if (vector_dot(&OBJ.normal, &OBJ.normal) == 0)
+				break ;
+			OBJ.normal = vector_scale(1.0f / ABSV(OBJ.normal), &OBJ.normal);
+			OBJ.cur_mat = env->obj.mats[TRI[OBJ.cur_tri].shape.material];
+		}
+		else if (OBJ.cur_cyl != -1)
+		{
+			ft_printf("DERP\n");
+			scaled = vector_scale(t, &ray.dir);
+			OBJ.new_start = vector_add(&ray.start, &scaled);
+			OBJ.normal = vector_sub(&OBJ.new_start, &CYL_POS(OBJ.cur_cyl));
+			if (vector_dot(&OBJ.normal, &OBJ.normal) == 0)
+				break ;
+			OBJ.normal = vector_scale(1.0f / ABSV(OBJ.normal), &OBJ.normal);
+			OBJ.cur_mat = env->obj.mats[CYLINDERS[OBJ.cur_cyl].shape.material];
+		}
+		else
+			break;
 		calc_lighting(env, coef);
 		coef *= OBJ.cur_mat.reflection;
 		reflect_ray(env, &ray);
