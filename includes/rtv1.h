@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/01 08:09:54 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/11 13:16:37 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/13 06:58:15 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,6 @@ int				close_window(t_env *env);
 
 void			sphere_raytrace(t_env *env);
 
-int				intersect_ray_sphere(t_ray *ray, t_sphere *sphere, float *t);
-
 /*
 ** File Input
 */
@@ -149,8 +147,20 @@ void  			calc_lighting(t_env *env, float coef);
 
 void			raytrace(t_env *env);
 
+int				intersect_ray_sphere(t_ray *ray, t_sphere *sphere, float *t);
+
 int				intersect_ray_cylinder(t_ray *ray, t_cylinder *cyl, float *t);
 
 int				intersect_ray_tri(t_ray *r, t_triangle *tri, float *res, t_vector *n);
+
+/*
+** Light & shadows
+*/
+
+int				sh_spheres(t_env *env, t_ray *light_ray, float t);
+
+int				sh_tri(t_env *env, t_ray *light_ray, float t);
+
+int				sh_cylinder(t_env *env, t_ray *light_ray, float t);
 
 #endif

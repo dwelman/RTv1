@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/01 08:32:34 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/12 06:38:06 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/12 16:35:50 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int argc, char **argv)
 	env.img.data = mlx_get_data_addr(env.img.img, &env.img.bpp,
 	&env.img.s, &env.img.e);
 	raytrace(&env);	
-	mlx_put_image_to_window(env.mlx, env.win, env.img.img, 0 , 0);
+	mlx_put_image_to_window(env.mlx, env.win, env.img.img, 0, 0);
 	mlx_key_hook(env.win, key_hook, &env);
 	mlx_mouse_hook(env.win, temp, &env);
 	mlx_hook(env.win, 17, 0L, &close_window, &env);

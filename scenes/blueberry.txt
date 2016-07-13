@@ -14,6 +14,6 @@ cylinders:0
 # Spheres
 x400 y340 z5 r125 m1
 # Triangles
-v1(x0y250z200), v2(x800y250z200), v3(x0y600z-400) m3
-v1(x0y600z-400), v2(x800y250z200), v3(x800y600z-400) m3
+v1(x20y250z200), v2(x780y250z200), v3(x20y580z-400) m3
+v1(x20y580z-400), v2(x780y250z200), v3(x780y580z-400) m3
 # Cylinders

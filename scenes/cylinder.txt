@@ -1,19 +1,25 @@
 # Comment lines to be prefixed with '#'
 materials:4
 lights:1
-spheres:0
-triangles:0
-cylinders:1
+spheres:1
+triangles:4
+cylinders:4
 # Materials r[0-255] g[0-255] b[0-255] *[reflection]
 1 r210 g255 b0   *2
-2 r250 g100 b130 *5
-3 r255 g0   b255 *7
+2 r250 g200 b130 *0
+3 r215 g0 b255 *7
 4 r255 g255 b255 *2
 # Lights (x; y; x) colour [0-255] g[0-255] b[0-255] 
-(x600 ; y0 ; z-100) r255 g255 b255
+(x400 ; y300 ; z-1000) r255 g255 b255
 # Spheres
+x400 y300 z0 r50 m2
 # Triangles
-# v1(x20y250z200), v2(x780y250z200), v3(x20y580z-400) m3
-# v1(x20y580z-400), v2(x780y250z200), v3(x780y580z-400) m3
+v1(x0y250z200), v2(x800y250z200), v3(x0y600z-400) m3
+v1(x0y600z-400), v2(x800y250z200), v3(x800y600z-400) m3
+v1(x0y0z200), v2(x800y0z200), v3(x800y250z200) m3
+v1(x0y0z200), v2(x800y250z200), v3(x0y250z200) m3
 # Cylinders
-x400 y300 z0 r125 m1
+x250 y300 z100 r50 m1
+x550 y300 z100 r50 m1
+x600 y500 z-200 r50 m1
+x200 y500 z-200 r50 m1

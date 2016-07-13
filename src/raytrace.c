@@ -6,7 +6,7 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/07 07:24:50 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/12 06:56:09 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/13 07:14:02 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void			get_intersections(t_env *env, t_ray ray, float *t)
 	int			i;
 	float		t1 = *t;
 	float		t2 = *t;
-	//float		t3 = *t;
+	float		t3 = *t;
 	t_vector	n;
 	t_vector	scaled;
 	t_vector	ns;
-	//t_vector	nc;
+	t_vector	nc;
 
 	i = 0;
 	OBJ.cur_sphere = -1;
@@ -68,26 +68,32 @@ void			get_intersections(t_env *env, t_ray ray, float *t)
 	}
 	i = 0;
 	OBJ.cur_cyl = -1;
-/*	while (i < OBJ.num_cyl)
+	while (i < OBJ.num_cyl)
 	{
 		if (intersect_ray_cylinder(&ray, &CYLINDERS[i], &t3))
 		{
 			scaled = vector_scale(t3, &ray.dir);
 			nc = vector_add(&ray.start, &scaled);
-			printf("INTERSECT CYL AT %f %f %f\n", nc.x, nc.y, nc.z);
 			CYLINDERS[i].shape.dist = vector_dist(&nc, &ray.start);
+			if (nc.x == 393 && nc.y == 275)
+			{
+				printf("cross INTERSECT CYL AT %f %f %f\n", nc.x, nc.y, nc.z);
+				printf("DIST %f\n", CYLINDERS[i].shape.dist);
+				printf("ref %f\n", ref_dist);
+			}
 			if (CYLINDERS[i].shape.dist < ref_dist)
 			{
+//				if (nc.x == 383 && nc.y == 175)
+//					printf("INTERSECT CYL AT %f %f %f\n", nc.x, nc.y, nc.z);
 				*t = t3;
 				ref_dist = CYLINDERS[i].shape.dist;
-//				ft_printf("segslel\n");
 				OBJ.cur_cyl = i;
 				OBJ.cur_sphere = -1;
 				OBJ.cur_tri = -1;
 			}
 		}
 		i++;
-	}*/
+	}
 
 }
 
@@ -147,9 +153,10 @@ static t_col		shoot_ray(t_ray ray, int level_max, t_env *env)
 		}
 		else if (OBJ.cur_cyl != -1)
 		{
-			ft_printf("DERP\n");
 			scaled = vector_scale(t, &ray.dir);
 			OBJ.new_start = vector_add(&ray.start, &scaled);
+			if (OBJ.new_start.x == 383 && OBJ.new_start.y == 175)
+				print_vector("ns = ", OBJ.new_start);
 			OBJ.normal = vector_sub(&OBJ.new_start, &CYL_POS(OBJ.cur_cyl));
 			if (vector_dot(&OBJ.normal, &OBJ.normal) == 0)
 				break ;
@@ -185,8 +192,8 @@ static void			save_to_img(t_env *env, t_col col, int x, int y)
 		temp.b = col.b * 255.0f;
 	else
 		temp.b = 255.0f;
-	env->img.data[(x + y * WIN_X) * 4 + 0] = (unsigned char)temp.r;
-	env->img.data[(x + y * WIN_X) * 4 + 1] = (unsigned char)temp.g;
+	env->img.data[(x + y * WIN_X) * 4 + 1] = (unsigned char)temp.r;
+	env->img.data[(x + y * WIN_X) * 4 + 0] = (unsigned char)temp.g;
 	env->img.data[(x + y * WIN_X) * 4 + 2] = (unsigned char)temp.b;
 }
 
@@ -210,7 +217,7 @@ void				raytrace(t_env *env)
 		{
 			ray.start = new_vector(x, y, -2000);
 			ray.dir = new_vector(0, 0, 1);
-			col = shoot_ray(ray, 5, env);
+			col = shoot_ray(ray, 10, env);
 			save_to_img(env, col, x, y);
 			x++;
 		}

@@ -6,7 +6,7 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/08 14:02:18 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/11 16:54:58 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/12 16:31:04 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,18 @@ int	intersect_ray_cylinder(t_ray *ray, t_cylinder *cyl, float *t)
 	float		disc;
 	t_vector	dist;
 
-	dist = vector_sub(&ray->start, &cyl->center);
-	a = SQR(ray->dir.x) + SQR(ray->dir.y);
-	b = 2 * (dist.x * ray->dir.x + 2 * dist.z * ray->dir.z);//b = 2xExD + 2yEyD
-	c = SQR(dist.x) + SQR(dist.z) - 1.0f; //c = xE^2 +yE^2 - 1
-//	printf("a = %f b = %f, c = %f\n", a, b, c);
+	dist = vector_sub(&cyl->center, &ray->start);
+	a = SQR(ray->dir.x) + SQR(ray->dir.z);
+	b = (2 * ray->dir.x * dist.x) + (2 * ray->dir.z * dist.z);//b = 2xExD + 2yEyD
+	c = SQR(dist.x) + SQR(dist.z) - SQR(cyl->radius); //c = xE^2 +yE^2 - 1
 	disc = SQR(b) - (4 * a * c);
-//	printf("disc %f\n", disc);
 	if (disc < 0)
 		return (0);
 	else
 	{
-		t1 = -b + sqrtf(SQR(b) - 4 * a * c) / 2 * a;
-		t2 = -b - sqrtf(SQR(b) - 4 * a * c) / 2 * a;
-		printf("t1 = %f t2 = %f\n", t1, t2);
-		if (t1 > t2)
+		t1 = (b - sqrt(disc)) / (2 * a);
+		t2 = (b + sqrt(disc)) / (2 * a);
+		if (t1 > t2 && t2 > 0)
 			t1 = t2;
 		if ((t1 > 0.001) && (t1 < *t))
 		{
@@ -48,39 +45,6 @@ int	intersect_ray_cylinder(t_ray *ray, t_cylinder *cyl, float *t)
 	}
 }
 
-/*
-int	intersect_ray_cylinder(t_ray *ray, t_sphere *sphere, float *t)
-{
-	t_ray_sphere	rs;
-
-	rs.a = vector_dot(&ray->dir, &ray->dir);
-	rs.dist = vector_sub(&ray->start, &sphere->shape.pos);
-	rs.b = 2 * vector_dot(&ray->dir, &rs.dist);
-	rs.c = vector_dot(&rs.dist, &rs.dist) - 1;
-	rs.discr = rs.b * rs.b - (4 * rs.a * rs.c);
-	if (rs.discr < 0)
-		return (0);
-	else
-	{
-		rs.sqrtdiscr = sqrtf(rs.discr);
-		rs.t0 = (-rs.b + rs.sqrtdiscr) / 2 * rs.a;
-		rs.t1 = (-rs.b - rs.sqrtdiscr) / 2 * rs.a;
-		if (rs.t0 > rs.t1)
-		{
-			//float	y0 = ray->start.y + rs.t0 * ray->dir.y;
-			//float	y1 = ray->start.y + rs.t1 * ray->dir.y;
-			rs.t0 = rs.t1;
-		}
-		if ((rs.t0 > 0.001f) && (rs.t0 < *t))
-		{
-			*t = rs.t0;
-			return (1);
-		}
-		else
-			return (0);
-	}
-}
-*/
 int	intersect_ray_sphere(t_ray *ray, t_sphere *sphere, float *t)
 {
 	t_ray_sphere	rs;
