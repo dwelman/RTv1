@@ -6,7 +6,7 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/07 07:24:50 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/13 07:14:02 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/13 15:52:39 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
 ** Calculate ray - primitive intesection.
 */
-
+/*
 void			get_intersections(t_env *env, t_ray ray, float *t)
 {
 	int			i;
@@ -83,8 +83,6 @@ void			get_intersections(t_env *env, t_ray ray, float *t)
 			}
 			if (CYLINDERS[i].shape.dist < ref_dist)
 			{
-//				if (nc.x == 383 && nc.y == 175)
-//					printf("INTERSECT CYL AT %f %f %f\n", nc.x, nc.y, nc.z);
 				*t = t3;
 				ref_dist = CYLINDERS[i].shape.dist;
 				OBJ.cur_cyl = i;
@@ -96,6 +94,7 @@ void			get_intersections(t_env *env, t_ray ray, float *t)
 	}
 
 }
+*/
 
 /*
 ** Reflect ray around normal.
@@ -153,11 +152,17 @@ static t_col		shoot_ray(t_ray ray, int level_max, t_env *env)
 		}
 		else if (OBJ.cur_cyl != -1)
 		{
+			OBJ.active_shape = CYLINDER;
 			scaled = vector_scale(t, &ray.dir);
 			OBJ.new_start = vector_add(&ray.start, &scaled);
-			if (OBJ.new_start.x == 383 && OBJ.new_start.y == 175)
-				print_vector("ns = ", OBJ.new_start);
-			OBJ.normal = vector_sub(&OBJ.new_start, &CYL_POS(OBJ.cur_cyl));
+			if (OBJ.new_start.x == 200 && OBJ.new_start.y == 185)
+				print_vector("1ns = ", OBJ.new_start);
+			if (OBJ.new_start.x == 200 && OBJ.new_start.y == 434)
+				print_vector("2ns = ", OBJ.new_start);
+	//		OBJ.normal = vector_sub(&OBJ.new_start, &CYL_POS(OBJ.cur_cyl));
+			OBJ.normal.x = OBJ.new_start.x - CYLINDERS[OBJ.cur_cyl].center.x;
+			OBJ.normal.z = OBJ.new_start.z - CYLINDERS[OBJ.cur_cyl].center.z;
+//			OBJ.normal.y = CYLINDERS[OBJ.cur_cyl].center.y - CYLINDERS[OBJ.cur_cyl].radius;
 			if (vector_dot(&OBJ.normal, &OBJ.normal) == 0)
 				break ;
 			OBJ.normal = vector_scale(1.0f / ABSV(OBJ.normal), &OBJ.normal);
@@ -215,7 +220,7 @@ void				raytrace(t_env *env)
 		x = 0;
 		while (x <= WIN_X)
 		{
-			ray.start = new_vector(x, y, -2000);
+			ray.start = new_vector(x, y, -5000);
 			ray.dir = new_vector(0, 0, 1);
 			col = shoot_ray(ray, 10, env);
 			save_to_img(env, col, x, y);

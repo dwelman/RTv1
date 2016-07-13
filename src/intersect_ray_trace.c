@@ -6,44 +6,48 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/08 14:02:18 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/12 16:31:04 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/13 16:45:10 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
 
+/*
+** Determine whether ray intersects with cylinder by substiting ray equation
+** in cylinder equation
+*/
+
 int	intersect_ray_cylinder(t_ray *ray, t_cylinder *cyl, float *t)
 {
-	float		a;
-	float		b;
-	float		c;
-	float		t1;
-	float		t2;
-	float		disc;
-	t_vector	dist;
+	t_ray_sphere rs;
 
-	dist = vector_sub(&cyl->center, &ray->start);
-	a = SQR(ray->dir.x) + SQR(ray->dir.z);
-	b = (2 * ray->dir.x * dist.x) + (2 * ray->dir.z * dist.z);//b = 2xExD + 2yEyD
-	c = SQR(dist.x) + SQR(dist.z) - SQR(cyl->radius); //c = xE^2 +yE^2 - 1
-	disc = SQR(b) - (4 * a * c);
-	if (disc < 0)
+	rs.dist = vector_sub(&cyl->center, &ray->start);
+	rs.a = SQR(ray->dir.x) + SQR(ray->dir.z);
+	rs.b = (2 * ray->dir.x * rs.dist.x) + (2 * ray->dir.z * rs.dist.z);
+	rs.c = SQR(rs.dist.x) + SQR(rs.dist.z) - SQR(cyl->radius);
+	rs.discr = SQR(rs.b) - (4 * rs.a * rs.c);
+	if (rs.discr < 0)
 		return (0);
 	else
 	{
-		t1 = (b - sqrt(disc)) / (2 * a);
-		t2 = (b + sqrt(disc)) / (2 * a);
-		if (t1 > t2 && t2 > 0)
-			t1 = t2;
-		if ((t1 > 0.001) && (t1 < *t))
+		rs.t0 = (rs.b - sqrt(rs.discr)) / (2 * rs.a);
+		rs.t1 = (rs.b + sqrt(rs.discr)) / (2 * rs.a);
+		if (rs.t0 > rs.t1 && rs.t1 > 0)
+			rs.t0 = rs.t1;
+		if ((rs.t0 > 0.001) && (rs.t0 < *t))
 		{
-			*t = t1;
+			*t = rs.t0;
 			return (1);
 		}
 		else
 			return (0);
 	}
 }
+
+/*
+** Determine whether ray intersects with sphere by substiting ray equation
+** in sphere equation
+*/
 
 int	intersect_ray_sphere(t_ray *ray, t_sphere *sphere, float *t)
 {

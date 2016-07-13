@@ -6,7 +6,7 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/08 08:19:55 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/13 07:08:00 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/13 16:47:05 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,9 @@ int		check_in_shadow(t_env *env, float t, t_vector dist, t_ray *light_ray)
 
 void	lambert_diffuse(t_env *env, float coef, t_ray light_ray, int j)
 {
-	double	lam;
+	double		lam;
 
 	lam = vector_dot(&light_ray.dir, &OBJ.normal) * coef;
-	if (light_ray.start.x == 383 && light_ray.start.y == 175)
-	{
-		printf("Rlam = %f\n", lam);
-		printf("Rcoef = %f\n", coef);
-		print_vector("normal ", OBJ.normal);
-		print_vector("light_ray.dir ", light_ray.dir);
-	}
-	if (light_ray.start.x == 383 && light_ray.start.y == 195)
-	{
-		printf("Xlam = %f\n", lam);
-		printf("Xcoef = %f\n", coef);
-		print_vector("normal ", OBJ.normal);
-		print_vector("light_ray.dir ", light_ray.dir);
-	}
 	OBJ.col.r += lam * OBJ.lights[j].intensity.r * OBJ.cur_mat.diffuse.r;
 	OBJ.col.g += lam * OBJ.lights[j].intensity.g * OBJ.cur_mat.diffuse.g;
 	OBJ.col.b += lam * OBJ.lights[j].intensity.b * OBJ.cur_mat.diffuse.b;

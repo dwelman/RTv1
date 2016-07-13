@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/05 11:09:03 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/11 16:13:10 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/13 16:46:17 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ void			fill_cylinders(t_env *env, int fd)
 			CYLINDERS[i].radius = ft_atoi(++temp);
 			temp = set_temp(++temp, 'm');
 			CYLINDERS[i].shape.material = ft_atoi(++temp);
-			printf("cyl x = %f, y = %f, z = %f r = %f m = %d\n", CYLINDERS[i].center.x, CYLINDERS[i].center.y, CYLINDERS[i].center.z,
-						CYLINDERS[i].radius, CYLINDERS[i].shape.material);
 			i++;
 		}
 		free(line);

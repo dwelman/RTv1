@@ -6,14 +6,14 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/01 08:32:34 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/12 16:35:50 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/13 16:38:44 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
 #include <libc.h>
 
-int		temp(t_env *env , int x, int y)
+int	temp(t_env *env, int x, int y)
 {
 	ft_printf("derp");
 	void	*ffs;
@@ -30,7 +30,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 	{
 		ft_printf("Please include a scene file\n");
-		return(0);
+		return (0);
 	}
 	get_input(&env, argv[1]);
 	env.mlx = mlx_init();
@@ -38,7 +38,7 @@ int	main(int argc, char **argv)
 	env.img.img = mlx_new_image(env.mlx, WIN_X, WIN_Y);
 	env.img.data = mlx_get_data_addr(env.img.img, &env.img.bpp,
 	&env.img.s, &env.img.e);
-	raytrace(&env);	
+	raytrace(&env);
 	mlx_put_image_to_window(env.mlx, env.win, env.img.img, 0, 0);
 	mlx_key_hook(env.win, key_hook, &env);
 	mlx_mouse_hook(env.win, temp, &env);

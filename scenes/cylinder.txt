@@ -6,7 +6,7 @@ triangles:4
 cylinders:4
 # Materials r[0-255] g[0-255] b[0-255] *[reflection]
 1 r210 g255 b0   *2
-2 r250 g200 b130 *0
+2 r125 g42 b200 *2
 3 r215 g0 b255 *7
 4 r255 g255 b255 *2
 # Lights (x; y; x) colour [0-255] g[0-255] b[0-255] 

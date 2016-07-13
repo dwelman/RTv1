@@ -6,7 +6,7 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/07 07:03:45 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/08 17:52:45 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/13 16:48:45 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_triangle	new_triangle(t_vector v1, t_vector v2, t_vector v3, int mat)
 	return (new);
 }
 
-void	set_tri_pos(t_triangle *tri)
+void		set_tri_pos(t_triangle *tri)
 {
 	tri->shape.pos.x = (tri->v1.x + tri->v2.x + tri->v3.x) / 3;
 	tri->shape.pos.y = (tri->v1.y + tri->v2.y + tri->v3.y) / 3;

@@ -6,7 +6,7 @@
 #    By: daviwel <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/07/01 13:21:50 by daviwel           #+#    #+#              #
-#    Updated: 2016/07/13 06:59:04 by ddu-toit         ###   ########.fr        #
+#    Updated: 2016/07/13 15:29:58 by ddu-toit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC = $(PATH)main.c \
 	  $(PATH)fill_materials.c\
 	  $(PATH)fill_cylinders.c\
 	  $(PATH)raytrace.c\
+	  $(PATH)get_intersections.c\
 	  $(PATH)light.c\
 	  $(PATH)shadow.c\
 	  $(PATH)set_structs.c\

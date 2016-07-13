@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/01 08:09:54 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/13 06:58:15 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/13 15:28:56 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@
 enum
 {
 	SPHERE = 1,
-	TRIANGLE
+	TRIANGLE,
+	CYLINDER
 };
 
 typedef struct	s_img
@@ -146,6 +147,8 @@ void			get_input(t_env *env, char *file);
 void  			calc_lighting(t_env *env, float coef);
 
 void			raytrace(t_env *env);
+
+void			get_intersections(t_env *env, t_ray ray, float *t);
 
 int				intersect_ray_sphere(t_ray *ray, t_sphere *sphere, float *t);
 
