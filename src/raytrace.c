@@ -6,7 +6,7 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/07 07:24:50 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/14 12:17:01 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/14 15:09:34 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,53 +38,20 @@ static t_col		shoot_ray(t_ray ray, int level_max, t_env *env)
 {
 	float		coef;
 	float		t;
-//	t_vector	scaled;
 
 	coef = 1.0;
-	set_col(&OBJ.col, 0, 0, 0);
-	env->br = 0;
 	while (coef > 0.0f && level_max--)
 	{
 		t = 20000.0f;
 		get_intersections(env, ray, &t);
 		if (OBJ.cur_sphere != -1)
-		{
 			set_val_sphere(env, t, ray);
-		}
 		else if (OBJ.cur_tri != -1)
-		{
 			set_val_tri(env, t, ray);
-/*			scaled = vector_scale(t, &ray.dir);
-			OBJ.new_start = vector_add(&ray.start, &scaled);
-			OBJ.normal = TRI[OBJ.cur_tri].normal;
-			if (vector_dot(&OBJ.normal, &OBJ.normal) == 0)
-				break ;
-			OBJ.normal = vector_scale(1.0f / ABSV(OBJ.normal), &OBJ.normal);
-			OBJ.cur_mat = env->obj.mats[TRI[OBJ.cur_tri].shape.material];
-*/		}
 		else if (OBJ.cur_cyl != -1)
-		{
 			set_val_cyl(env, t, ray);
-/*			scaled = vector_scale(t, &ray.dir);
-			OBJ.new_start = vector_add(&ray.start, &scaled);
-			OBJ.normal.x = OBJ.new_start.x - CYLINDERS[OBJ.cur_cyl].center.x;
-			OBJ.normal.z = OBJ.new_start.z - CYLINDERS[OBJ.cur_cyl].center.z;
-			if (vector_dot(&OBJ.normal, &OBJ.normal) == 0)
-				break ;
-			OBJ.normal = vector_scale(1.0f / ABSV(OBJ.normal), &OBJ.normal);
-			OBJ.cur_mat = env->obj.mats[CYLINDERS[OBJ.cur_cyl].shape.material];
-*/		}
 		else if (OBJ.cur_cone != -1)
-		{
 			set_val_cone(env, t, ray);
-/*			scaled = vector_scale(t, &ray.dir);
-			OBJ.new_start = vector_add(&ray.start, &scaled);
-			OBJ.normal = vector_sub(&OBJ.new_start, &CN_POS(OBJ.cur_cone));
-			if (vector_dot(&OBJ.normal, &OBJ.normal) == 0)
-				break ;
-			OBJ.normal = vector_scale(1.0f / ABSV(OBJ.normal), &OBJ.normal);
-			OBJ.cur_mat = env->obj.mats[CONES[OBJ.cur_cone].shape.material];
-*/		}
 		else
 			break ;
 		if (env->br == 1)
@@ -141,6 +108,8 @@ void				raytrace(t_env *env)
 		{
 			ray.start = new_vector(x, y, -5000);
 			ray.dir = new_vector(0, 0, 1);
+			set_col(&OBJ.col, 0, 0, 0);
+			env->br = 0;
 			col = shoot_ray(ray, 10, env);
 			save_to_img(env, col, x, y);
 			x++;

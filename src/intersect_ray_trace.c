@@ -6,7 +6,7 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/08 14:02:18 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/14 11:41:44 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/14 15:15:09 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	intersect_ray_cone(t_ray *ray, t_cone *cone, float *t)
 
 	rs.dist = vector_sub(&cone->center, &ray->start);
 	rs.a = SQR(ray->dir.x) + SQR(ray->dir.z) - SQR(ray->dir.y);
-	rs.b = (2 * ray->dir.x * rs.dist.x) + (2 * ray->dir.z * rs.dist.z) - (2 * ray->dir.y * rs.dist.y);
+	rs.b = (2 * ray->dir.x * rs.dist.x) + (2 * ray->dir.z * rs.dist.z)
+		- (2 * ray->dir.y * rs.dist.y);
 	rs.c = SQR(rs.dist.x) + SQR(rs.dist.z) - SQR(rs.dist.y);
 	rs.discr = SQR(rs.b) - (4 * rs.a * rs.c);
 	if (rs.discr < 0)
@@ -140,5 +141,3 @@ int	intersect_ray_tri(t_ray *ray, t_triangle *tri, float *res, t_vector *n)
 	*n = vector_cross(&r.e2, &r.e1);
 	return (1);
 }
-
-

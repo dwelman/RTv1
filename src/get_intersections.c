@@ -6,7 +6,7 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/07 07:24:50 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/14 09:36:53 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/14 15:11:56 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,5 +140,4 @@ void			get_intersections(t_env *env, t_ray ray, float *t)
 	gi_tri(env, ray, t, &ref_dist);
 	gi_cyl(env, ray, t, &ref_dist);
 	gi_cone(env, ray, t, &ref_dist);
-//	printf("YO\n");
 }

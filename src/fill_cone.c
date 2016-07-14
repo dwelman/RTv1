@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/05 11:09:03 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/14 09:09:43 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/14 15:11:06 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ void			fill_cone(t_env *env, int fd)
 			CONES[i].radius = ft_atoi(++temp);
 			temp = set_temp(++temp, 'm');
 			CONES[i].shape.material = ft_atoi(++temp);
-			printf("x = %f y = %f z = %f r = %f m = %d\n", CONES[i].shape.pos.x, CONES[i].shape.pos.y,
-					CONES[i].shape.pos.z, CONES[i].radius, CONES[i].shape.material); 
 			i++;
 		}
 		free(line);
