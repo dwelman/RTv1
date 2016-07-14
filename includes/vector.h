@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 08:31:19 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/11 10:20:36 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/14 07:16:40 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,13 @@ typedef struct	s_cylinder
 	float		radius;
 	t_shape		shape;
 }				t_cylinder;
+
+typedef struct	s_cone
+{
+	t_vector	center;
+	float		radius;
+	t_shape		shape;
+}				t_cone;
 
 float			vector_dot(t_vector *v1, t_vector *v2);
 

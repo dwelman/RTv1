@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/01 08:09:54 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/13 15:28:56 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/14 12:12:24 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@
 # define OBJ env->obj
 # define SPHERES env->obj.spheres
 # define CYLINDERS env->obj.cylinders
+# define CONES env->obj.cones
 # define TRI env->obj.triangles
 # define SP_POS(X) SPHERES[X].shape.pos
 # define TR_POS(X) TRI[X].shape.pos
 # define CYL_POS(X) CYLINDERS[X].shape.pos
+# define CN_POS(X) CONES[X].shape.pos
 # define ABSV(X) sqrt(vector_dot(&X, &X))
 # define SQR(X) (X * X)
 
@@ -68,6 +70,9 @@ typedef struct	s_obj
 	t_cylinder	*cylinders;
 	int			num_cyl;
 	int			cur_cyl;
+	t_cone		*cones;
+	int			cur_cone;
+	int			num_cone;
 	t_material	cur_mat;
 	t_vector	normal;
 	t_vector	new_start;
@@ -83,6 +88,7 @@ typedef struct	s_env
 	void		*win;
 	t_img		img;
 	t_obj		obj;
+	int			br;
 }				t_env;
 
 typedef struct	s_ray_sphere
@@ -128,6 +134,8 @@ void			sphere_raytrace(t_env *env);
 ** File Input
 */
 
+void			fill_cone(t_env *env, int fd);
+
 void			fill_materials(t_env *env, int fd);
 
 void			fill_lights(t_env *env, int fd);
@@ -148,6 +156,14 @@ void  			calc_lighting(t_env *env, float coef);
 
 void			raytrace(t_env *env);
 
+void 			set_val_sphere(t_env *env, float t, t_ray ray);
+
+void			set_val_tri(t_env *env, float t, t_ray ray);
+
+void			set_val_cyl(t_env *env, float t, t_ray ray);
+
+void			set_val_cone(t_env *env, float t, t_ray ray);
+
 void			get_intersections(t_env *env, t_ray ray, float *t);
 
 int				intersect_ray_sphere(t_ray *ray, t_sphere *sphere, float *t);
@@ -155,6 +171,8 @@ int				intersect_ray_sphere(t_ray *ray, t_sphere *sphere, float *t);
 int				intersect_ray_cylinder(t_ray *ray, t_cylinder *cyl, float *t);
 
 int				intersect_ray_tri(t_ray *r, t_triangle *tri, float *res, t_vector *n);
+
+int				intersect_ray_cone(t_ray *ray, t_cone *cone, float *t);
 
 /*
 ** Light & shadows

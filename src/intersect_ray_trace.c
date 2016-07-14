@@ -6,11 +6,43 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/08 14:02:18 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/13 16:45:10 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/14 11:41:44 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
+
+/*
+** Determine whether ray intersects with cone by substiting ray equation
+** in cone equation
+*/
+
+int	intersect_ray_cone(t_ray *ray, t_cone *cone, float *t)
+{
+	t_ray_sphere rs;
+
+	rs.dist = vector_sub(&cone->center, &ray->start);
+	rs.a = SQR(ray->dir.x) + SQR(ray->dir.z) - SQR(ray->dir.y);
+	rs.b = (2 * ray->dir.x * rs.dist.x) + (2 * ray->dir.z * rs.dist.z) - (2 * ray->dir.y * rs.dist.y);
+	rs.c = SQR(rs.dist.x) + SQR(rs.dist.z) - SQR(rs.dist.y);
+	rs.discr = SQR(rs.b) - (4 * rs.a * rs.c);
+	if (rs.discr < 0)
+		return (0);
+	else
+	{
+		rs.t0 = (rs.b - sqrt(rs.discr)) / (2 * rs.a);
+		rs.t1 = (rs.b + sqrt(rs.discr)) / (2 * rs.a);
+		if (rs.t0 > rs.t1 && rs.t1 > 0)
+			rs.t0 = rs.t1;
+		if ((rs.t0 > 0.001) && (rs.t0 < *t))
+		{
+			*t = rs.t0;
+			return (1);
+		}
+		else
+			return (0);
+	}
+}
 
 /*
 ** Determine whether ray intersects with cylinder by substiting ray equation
@@ -108,3 +140,5 @@ int	intersect_ray_tri(t_ray *ray, t_triangle *tri, float *res, t_vector *n)
 	*n = vector_cross(&r.e2, &r.e1);
 	return (1);
 }
+
+

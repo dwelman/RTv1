@@ -4,6 +4,7 @@ lights:3
 spheres:4
 triangles:0
 cylinders:0
+cones:0
 # Materials r[0-255] g[0-255] b[0-255] *[reflection]
 1 r210 g255 b0   *2
 2 r130 g130 b130 *5
