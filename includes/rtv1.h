@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/01 08:09:54 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/15 15:49:41 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/15 22:16:45 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 # define TRI env->obj.triangles
 # define SP_POS(X) SPHERES[X].shape.pos
 # define TR_POS(X) TRI[X].shape.pos
-# define CYL_POS(X) CYLINDERS[X].shape.pos
-# define CN_POS(X) CONES[X].shape.pos
+# define CYL_POS(X) CYLINDERS[X].p
+# define CN_POS(X) CONES[X].p
 # define ABSV(X) sqrt(vector_dot(&X, &X))
 # define SQR(X) (X * X)
 # define V ray->dir
