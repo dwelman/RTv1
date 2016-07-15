@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/05 11:09:03 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/15 21:00:09 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/15 21:13:28 by daviwel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char		*set_temp(char *ptr, char c)
 }
 
 void			rotate_cyl(t_env *env, int i)
-{	
+{
 	rotate_vec_x(CYLINDERS[i].rot.x, &CYLINDERS[i].v);
 	rotate_vec_x(CYLINDERS[i].rot.x, &CYLINDERS[i].p);
 	rotate_vec_y(CYLINDERS[i].rot.y, &CYLINDERS[i].v);

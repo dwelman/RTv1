@@ -6,7 +6,7 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/07 07:24:50 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/15 20:56:20 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/15 21:16:15 by daviwel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	unrotate_vec(t_env *env, int i, t_vector *vec)
 	rotate_vec_z(-CYLINDERS[i].rot.z, vec);
 }
 
-void		set_val_cyl(t_env *env, float t, t_ray ray)
+void	set_val_cyl(t_env *env, float t, t_ray ray)
 {
 	t_vector	scaled;
 
@@ -64,9 +64,9 @@ void		set_val_cyl(t_env *env, float t, t_ray ray)
 	OBJ.normal = vector_sub(&OBJ.new_start, &CYL_POS(OBJ.cur_cyl));
 	unrotate_vec(env, OBJ.cur_cyl, &OBJ.normal);
 	OBJ.normal.y = 0;
-	rotate_vec_x(CYLINDERS[OBJ.cur_cyl].rot.x , &OBJ.normal);
-	rotate_vec_y(CYLINDERS[OBJ.cur_cyl].rot.y , &OBJ.normal);
-	rotate_vec_z(CYLINDERS[OBJ.cur_cyl].rot.z , &OBJ.normal);
+	rotate_vec_x(CYLINDERS[OBJ.cur_cyl].rot.x, &OBJ.normal);
+	rotate_vec_y(CYLINDERS[OBJ.cur_cyl].rot.y, &OBJ.normal);
+	rotate_vec_z(CYLINDERS[OBJ.cur_cyl].rot.z, &OBJ.normal);
 	if (vector_dot(&OBJ.normal, &OBJ.normal) == 0)
 	{
 		env->br = 1;

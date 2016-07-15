@@ -6,21 +6,12 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/01 08:32:34 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/14 15:56:51 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/15 21:15:33 by daviwel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv1.h"
 #include <libc.h>
-
-int	temp(t_env *env, int x, int y)
-{
-	void	*ffs;
-
-	printf("Mouse event x = %d y = %d\n",  x, y);
-	ffs = env->win;
-	return (1);
-}
 
 void	cleanup2(t_env *env)
 {
@@ -69,7 +60,7 @@ int		expose(t_env *env)
 	return (0);
 }
 
-int	main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	t_env		env;
 
@@ -87,7 +78,6 @@ int	main(int argc, char **argv)
 	raytrace(&env);
 	mlx_expose_hook(env.win, expose, &env);
 	mlx_key_hook(env.win, key_hook, &env);
-	//mlx_mouse_hook(env.win, temp, &env);
 	mlx_hook(env.win, 17, 0L, &close_window, &env);
 	mlx_loop(env.mlx);
 	return (0);
