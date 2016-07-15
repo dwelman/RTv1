@@ -5,6 +5,7 @@ A spheres:3
 A triangles:2
 A cylinders:1
 A cones:0
+A Camera :  R x0 y0 z0 D x0 y0 z1 P x0 y0 z-2000
 # Materials r[0-255] g[0-255] b[0-255] *[reflection]
 M1 r218 g165 b32  *3
 M2 r125 g245 b200 *0
