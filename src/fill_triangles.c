@@ -6,7 +6,7 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/07 07:40:39 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/15 11:11:44 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/15 15:13:47 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	v_read_err(char *temp)
 	}
 }
 
-static void	set_vector(t_vector *v, char *temp)
+void		set_vector(t_vector *v, char *temp)
 {
 	temp = ft_strchr(temp, 'x');
 	v_read_err(temp);

@@ -6,7 +6,7 @@
 #    By: daviwel <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/07/01 13:21:50 by daviwel           #+#    #+#              #
-#    Updated: 2016/07/15 13:07:16 by ddu-toit         ###   ########.fr        #
+#    Updated: 2016/07/15 19:11:06 by ddu-toit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC = $(PATH)main.c \
 	  $(PATH)vector_dist.c \
 	  $(PATH)vector_rotate.c \
 	  $(PATH)vector_norm.c \
+	  $(PATH)vector_div.c \
 	  $(PATH)rotate_tri.c \
 	  $(PATH)key_hook.c \
 	  $(PATH)close_window.c \

@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/05 11:09:03 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/13 16:46:17 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/15 21:00:09 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@ static char		*set_temp(char *ptr, char c)
 	return (temp);
 }
 
+void			rotate_cyl(t_env *env, int i)
+{	
+	rotate_vec_x(CYLINDERS[i].rot.x, &CYLINDERS[i].v);
+	rotate_vec_x(CYLINDERS[i].rot.x, &CYLINDERS[i].p);
+	rotate_vec_y(CYLINDERS[i].rot.y, &CYLINDERS[i].v);
+	rotate_vec_y(CYLINDERS[i].rot.y, &CYLINDERS[i].p);
+	rotate_vec_z(CYLINDERS[i].rot.z, &CYLINDERS[i].v);
+	rotate_vec_z(CYLINDERS[i].rot.z, &CYLINDERS[i].p);
+	vector_norm(&CYLINDERS[i].v);
+	CYLINDERS[i].shape.pos = CYLINDERS[i].p;
+}
+
 void			fill_cylinders(t_env *env, int fd)
 {
 	char	*line;
@@ -37,13 +49,13 @@ void			fill_cylinders(t_env *env, int fd)
 		if (*line != '#')
 		{
 			temp = line;
-			temp = set_temp(temp, 'x');
-			CYLINDERS[i].shape.pos.x = ft_atoi(++temp);
-			temp = set_temp(line, 'y');
-			CYLINDERS[i].shape.pos.y = ft_atoi(++temp);
-			temp = set_temp(++temp, 'z');
-			CYLINDERS[i].shape.pos.z = ft_atoi(++temp);
-			CYLINDERS[i].center = CYLINDERS[i].shape.pos;
+			temp = set_temp(++temp, 'R');
+			set_vector(&CYLINDERS[i].rot, temp);
+			temp = set_temp(temp, 'P');
+			set_vector(&CYLINDERS[i].p, ++temp);
+			temp = set_temp(temp, 'V');
+			set_vector(&CYLINDERS[i].v, ++temp);
+			rotate_cyl(env, i);
 			temp = set_temp(++temp, 'r');
 			CYLINDERS[i].radius = ft_atoi(++temp);
 			temp = set_temp(++temp, 'm');

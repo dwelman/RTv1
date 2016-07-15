@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 08:31:19 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/15 13:11:15 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/15 20:26:54 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ typedef struct	s_triangle
 
 typedef struct	s_cylinder
 {
-	t_vector	center;
+	t_vector	p;
+	t_vector	v;
+	t_vector	rot;
 	float		radius;
 	t_shape		shape;
 }				t_cylinder;
@@ -74,6 +76,8 @@ t_vector        vector_add(t_vector *v1, t_vector *v2);
 t_vector        vector_scale(float c, t_vector *v);
 
 t_vector		vector_cross(t_vector *v1, t_vector *v2);
+
+t_vector		vector_div(t_vector *v1, t_vector *v2);
 
 float			vector_dist(t_vector *v1, t_vector *v2);
 

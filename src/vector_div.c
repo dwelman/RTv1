@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate_tri.c                                       :+:      :+:    :+:   */
+/*   vector_div.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/07/15 07:46:52 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/15 14:24:55 by ddu-toit         ###   ########.fr       */
+/*   Created: 2016/07/15 19:03:09 by ddu-toit          #+#    #+#             */
+/*   Updated: 2016/07/15 19:11:58 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/vector.h"
+#include "../includes/rtv1.h"
 
-void	rotate_tri(t_triangle *tri)
+t_vector	vector_div(t_vector *v1, t_vector *v2)
 {
-	rotate_vec_x(tri->rot.x, &tri->v1);
-	rotate_vec_y(tri->rot.y, &tri->v1);
-	rotate_vec_z(tri->rot.z, &tri->v1);
-	rotate_vec_x(tri->rot.x, &tri->v2);
-	rotate_vec_y(tri->rot.y, &tri->v2);
-	rotate_vec_z(tri->rot.z, &tri->v2);
-	rotate_vec_x(tri->rot.x, &tri->v3);
-	rotate_vec_y(tri->rot.y, &tri->v3);
-	rotate_vec_z(tri->rot.z, &tri->v3);
+	t_vector	ret;
+
+	ret.x = v1->x / v2->x;
+	ret.y = v1->y / v2->y;
+	ret.z = v1->z / v2->z;
+	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/01 08:09:54 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/15 07:04:03 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/15 15:49:41 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@
 # define CN_POS(X) CONES[X].shape.pos
 # define ABSV(X) sqrt(vector_dot(&X, &X))
 # define SQR(X) (X * X)
+# define V ray->dir
+# define P ray->start
+# define PA cyl->p
+# define VA cyl->v
+# define DEL_P vector_sub(&P, &PA)
+# define VEC_SQR(X) vector_dot(X, X)
 
 enum
 {
@@ -147,6 +153,8 @@ void			fill_spheres(t_env *env, int fd);
 void			fill_triangles(t_env *env, int fd);
 
 void			fill_cylinders(t_env *env, int fd);
+
+void			set_vector(t_vector *v, char *temp);
 
 void			get_input(t_env *env, char *file);
 
