@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/05 09:29:51 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/14 09:09:21 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/15 06:58:00 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		set_temp(int fd)
 	return (val);
 }
 
-void	set_arrays(t_env *env, int fd)
+void	set_arrays(t_env *env, t_obj temp, int fd)
 {
 	OBJ.num_mats = set_temp(fd);
 	OBJ.num_lights = set_temp(fd);
@@ -44,6 +44,7 @@ void	set_arrays(t_env *env, int fd)
 	OBJ.num_tri = set_temp(fd);
 	OBJ.num_cyl = set_temp(fd);
 	OBJ.num_cone = set_temp(fd);
+	val_types(env, temp);
 	OBJ.mats = (t_material *)malloc(sizeof(t_material) *
 			env->obj.num_mats);
 	OBJ.lights = (t_light *)malloc(sizeof(t_light) * OBJ.num_lights);
@@ -54,6 +55,16 @@ void	set_arrays(t_env *env, int fd)
 	OBJ.cones = (t_cone*)malloc(sizeof(t_cone) * OBJ.num_cone);
 }
 
+void	init_obj(t_obj *obj)
+{
+	obj->num_mats = 0;
+	obj->num_lights = 0;
+	obj->num_spheres = 0;
+	obj->num_tri = 0;
+	obj->num_cyl = 0;
+	obj->num_cone = 0;
+}
+
 /*
 ** Reads input from a scene file
 */
@@ -61,20 +72,25 @@ void	set_arrays(t_env *env, int fd)
 void	get_input(t_env *env, char *file)
 {
 	int		fd;
-	char	*skip;
+	int		fdc;
+	t_obj	temp;
 
+	fdc = 0;
 	if ((fd = open(file, O_RDONLY)) == -1)
 	{
 		ft_printf("Error reading file\n");
 		exit(0);
 	}
-	set_arrays(env, fd);
-	get_next_line(fd, &skip);
-	free(skip);
+	init_obj(&temp);
+	fdc = open(file, O_RDONLY);
+	count_types(&temp, fdc);
+	set_arrays(env, temp, fd);
 	fill_materials(env, fd);
 	fill_lights(env, fd);
 	fill_spheres(env, fd);
 	fill_triangles(env, fd);
 	fill_cylinders(env, fd);
 	fill_cone(env, fd);
+	close(fd);
+	close(fdc);
 }

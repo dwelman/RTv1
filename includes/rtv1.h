@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/01 08:09:54 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/14 12:12:24 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/15 07:04:03 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ typedef struct	s_ray_tri
 	t_vector	s3;
 }				t_ray_tri;
 
+
+
 void			print_vector(char *des, t_vector v);
 
 void			mlx_image_put_pixel(void *mlx, t_img *i, t_vector p,
@@ -147,6 +149,10 @@ void			fill_triangles(t_env *env, int fd);
 void			fill_cylinders(t_env *env, int fd);
 
 void			get_input(t_env *env, char *file);
+
+void			count_types(t_obj *temp, int fd);
+
+void			val_types(t_env *env, t_obj temp);
 
 /*
 ** Primitive Intersection & raytracing

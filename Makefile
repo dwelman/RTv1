@@ -6,7 +6,7 @@
 #    By: daviwel <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/07/01 13:21:50 by daviwel           #+#    #+#              #
-#    Updated: 2016/07/14 11:50:41 by ddu-toit         ###   ########.fr        #
+#    Updated: 2016/07/15 13:07:16 by ddu-toit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +22,14 @@ SRC = $(PATH)main.c \
 	  $(PATH)vector_cross.c \
 	  $(PATH)vector_scale.c \
 	  $(PATH)vector_dist.c \
-	  $(PATH)mlx_image_put_pixel.c \
+	  $(PATH)vector_rotate.c \
+	  $(PATH)vector_norm.c \
+	  $(PATH)rotate_tri.c \
 	  $(PATH)key_hook.c \
 	  $(PATH)close_window.c \
 	  $(PATH)intersect_ray_trace.c \
 	  $(PATH)get_input.c \
+	  $(PATH)count_types.c \
 	  $(PATH)fill_spheres.c\
 	  $(PATH)fill_triangles.c\
 	  $(PATH)fill_lights.c\

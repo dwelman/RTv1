@@ -6,7 +6,7 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/07 07:24:50 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/14 15:09:34 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/15 13:15:52 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ static void			save_to_img(t_env *env, t_col col, int x, int y)
 		temp.b = col.b * 255.0f;
 	else
 		temp.b = 255.0f;
-	env->img.data[(x + y * WIN_X) * 4 + 0] = (unsigned char)temp.r;
+	env->img.data[(x + y * WIN_X) * 4 + 2] = (unsigned char)temp.r;
 	env->img.data[(x + y * WIN_X) * 4 + 1] = (unsigned char)temp.g;
-	env->img.data[(x + y * WIN_X) * 4 + 2] = (unsigned char)temp.b;
+	env->img.data[(x + y * WIN_X) * 4 + 0] = (unsigned char)temp.b;
 }
 
 /*
@@ -106,8 +106,9 @@ void				raytrace(t_env *env)
 		x = 0;
 		while (x <= WIN_X)
 		{
-			ray.start = new_vector(x, y, -5000);
-			ray.dir = new_vector(0, 0, 1);
+			ray.start = new_vector(x, y, -2000);
+			ray.dir = new_vector(0, 0, 200);
+			vector_norm(&ray.dir);
 			set_col(&OBJ.col, 0, 0, 0);
 			env->br = 0;
 			col = shoot_ray(ray, 10, env);
