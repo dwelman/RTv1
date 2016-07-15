@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/01 08:09:54 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/15 22:16:45 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/15 23:29:24 by daviwel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <mlx.h>
 # include "vector.h"
 # include "colours.h"
-# include"light.h"
+# include "light.h"
 # include "../libft/libft.h"
 # define WIN_X 800
 # define WIN_Y 600
@@ -123,7 +123,9 @@ typedef struct	s_ray_tri
 	t_vector	s3;
 }				t_ray_tri;
 
+int				solve_quadratic(t_ray_sphere *rs, float *t);
 
+void			unrotate_vec2(t_env *env, int i, t_vector *vec);
 
 void			print_vector(char *des, t_vector v);
 
@@ -166,11 +168,11 @@ void			val_types(t_env *env, t_obj temp);
 ** Primitive Intersection & raytracing
 */
 
-void  			calc_lighting(t_env *env, float coef);
+void			calc_lighting(t_env *env, float coef);
 
 void			raytrace(t_env *env);
 
-void 			set_val_sphere(t_env *env, float t, t_ray ray);
+void			set_val_sphere(t_env *env, float t, t_ray ray);
 
 void			set_val_tri(t_env *env, float t, t_ray ray);
 
@@ -184,7 +186,8 @@ int				intersect_ray_sphere(t_ray *ray, t_sphere *sphere, float *t);
 
 int				intersect_ray_cylinder(t_ray *ray, t_cylinder *cyl, float *t);
 
-int				intersect_ray_tri(t_ray *r, t_triangle *tri, float *res, t_vector *n);
+int				intersect_ray_tri(t_ray *r, t_triangle *tri, float *res,
+		t_vector *n);
 
 int				intersect_ray_cone(t_ray *ray, t_cone *cone, float *t);
 

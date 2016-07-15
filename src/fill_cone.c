@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/05 11:09:03 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/15 22:49:30 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/15 23:19:51 by daviwel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ static char		*set_temp(char *ptr, char c)
 
 void			rotate_cone(t_env *env, int i)
 {
-    rotate_vec_x(CONES[i].rot.x, &CONES[i].v);
-    rotate_vec_y(CONES[i].rot.y, &CONES[i].v);
-    rotate_vec_z(CONES[i].rot.z, &CONES[i].v);
+	rotate_vec_x(CONES[i].rot.x, &CONES[i].v);
+	rotate_vec_y(CONES[i].rot.y, &CONES[i].v);
+	rotate_vec_z(CONES[i].rot.z, &CONES[i].v);
+	CONES[i].shape.pos = CONES[i].p;
 }
 
 void			fill_cone(t_env *env, int fd)
@@ -51,7 +52,6 @@ void			fill_cone(t_env *env, int fd)
 			temp = set_temp(++temp, 'V');
 			set_vector(&CONES[i].v, ++temp);
 			rotate_cone(env, i);
-			CONES[i].shape.pos = CONES[i].p;
 			temp = set_temp(++temp, 'a');
 			CONES[i].alpha = ft_atoi(++temp);
 			temp = set_temp(++temp, 'm');

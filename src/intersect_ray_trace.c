@@ -6,7 +6,7 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/08 14:02:18 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/15 22:48:18 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/15 23:30:03 by daviwel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,81 +29,43 @@ t_vector	intersect_ray_line(t_ray *ray, t_vector *v, t_vector *p)
 ** in cone equation
 */
 
-int	intersect_ray_cone(t_ray *ray, t_cone *cone, float *t)
+int			intersect_ray_cone(t_ray *ray, t_cone *cone, float *t)
 {
-	t_ray_sphere rs;
-	float	alpha = cone->alpha;
-	t_vector 	a;
-	t_vector	b;
-	t_vector	del_p;
+	t_ray_sphere	rs;
+	t_vector		a;
+	t_vector		b;
+	t_vector		del_p;
 
 	a = vector_scale(vector_dot(&V, &cone->v), &cone->v);
 	a = vector_sub(&V, &a);
-	rs.a = SQR(cos(alpha)) * VEC_SQR(&a) - SQR(sin(alpha)) * SQR(vector_dot(&cone->v, &V));
+	rs.a = SQR(cos(cone->alpha)) * VEC_SQR(&a) - SQR(sin(cone->alpha)) *
+		SQR(vector_dot(&cone->v, &V));
 	del_p = vector_sub(&P, &cone->p);
 	b = vector_scale(vector_dot(&del_p, &cone->v), &cone->v);
 	b = vector_sub(&del_p, &b);
-	rs.b = 2.0f * SQR(cos(alpha)) * vector_dot(&a, &b) - 2.0f * SQR(sin(alpha)) * vector_dot(&V, &cone->v) * vector_dot(&del_p, &cone->v);
-	rs.c = SQR(cos(alpha)) * VEC_SQR(&b) - SQR(sin(alpha)) * SQR(vector_dot(&del_p, &cone->v));
+	rs.b = 2.0f * SQR(cos(cone->alpha)) * vector_dot(&a, &b) - 2.0f
+		* SQR(sin(cone->alpha))
+		* vector_dot(&V, &cone->v) * vector_dot(&del_p, &cone->v);
+	rs.c = SQR(cos(cone->alpha)) * VEC_SQR(&b) - SQR(sin(cone->alpha)) *
+		SQR(vector_dot(&del_p, &cone->v));
 	rs.discr = SQR(rs.b) - (4 * rs.a * rs.c);
 	if (rs.discr < 0)
 		return (0);
 	else
-	{
-		rs.t0 = (-rs.b - sqrt(rs.discr)) / (2 * rs.a);
-		rs.t1 = (-rs.b + sqrt(rs.discr)) / (2 * rs.a);
-		if (rs.t0 > rs.t1 && rs.t1 > 0)
-			rs.t0 = rs.t1;
-		if ((rs.t0 > 0.001) && (rs.t0 < *t))
-		{
-			*t = rs.t0;
-			return (1);
-		}
-		else
-			return (0);
-	}
+		return (solve_quadratic(&rs, t));
 }
-
-/*
-int	intersect_ray_cone(t_ray *ray, t_cone *cone, float *t)
-{
-	t_ray_sphere rs;
-
-	rs.dist = vector_sub(&cone->p, &ray->start);
-	rs.a = SQR(ray->dir.x) + SQR(ray->dir.z) - SQR(ray->dir.y);
-	rs.b = (2 * ray->dir.x * rs.dist.x) + (2 * ray->dir.z * rs.dist.z)
-		- (2 * ray->dir.y * rs.dist.y);
-	rs.c = SQR(rs.dist.x) + SQR(rs.dist.z) - SQR(rs.dist.y);
-	rs.discr = SQR(rs.b) - (4 * rs.a * rs.c);
-	if (rs.discr < 0)
-		return (0);
-	else
-	{
-		rs.t0 = (rs.b - sqrt(rs.discr)) / (2 * rs.a);
-		rs.t1 = (rs.b + sqrt(rs.discr)) / (2 * rs.a);
-		if (rs.t0 > rs.t1 && rs.t1 > 0)
-			rs.t0 = rs.t1;
-		if ((rs.t0 > 0.001) && (rs.t0 < *t))
-		{
-			*t = rs.t0;
-			return (1);
-		}
-		else
-			return (0);
-	}
-}*/
 
 /*
 ** Determine whether ray intersects with cylinder by substiting ray equation
 ** in cylinder equation
 */
 
-int	intersect_ray_cylinder(t_ray *ray, t_cylinder *cyl, float *t)
+int			intersect_ray_cylinder(t_ray *ray, t_cylinder *cyl, float *t)
 {
-	t_ray_sphere rs;
-	t_vector 	a;
-	t_vector	b;
-	t_vector	del_p;
+	t_ray_sphere	rs;
+	t_vector		a;
+	t_vector		b;
+	t_vector		del_p;
 
 	a = vector_scale(vector_dot(&V, &VA), &VA);
 	a = vector_sub(&V, &a);
@@ -117,19 +79,7 @@ int	intersect_ray_cylinder(t_ray *ray, t_cylinder *cyl, float *t)
 	if (rs.discr < 0)
 		return (0);
 	else
-	{
-		rs.t0 = (-1.0f * rs.b - sqrt(rs.discr)) / (2 * rs.a);
-		rs.t1 = (-1.0f * rs.b + sqrt(rs.discr)) / (2 * rs.a);
-		if (rs.t0 > rs.t1 && rs.t1 > 0)
-			rs.t0 = rs.t1;
-		if ((rs.t0 > 0.001) && (rs.t0 < *t))
-		{
-			*t = rs.t0;
-			return (1);
-		}
-		else
-			return (0);
-	}
+		return (solve_quadratic(&rs, t));
 }
 
 /*
@@ -137,7 +87,7 @@ int	intersect_ray_cylinder(t_ray *ray, t_cylinder *cyl, float *t)
 ** in sphere equation
 */
 
-int	intersect_ray_sphere(t_ray *ray, t_sphere *sphere, float *t)
+int			intersect_ray_sphere(t_ray *ray, t_sphere *sphere, float *t)
 {
 	t_ray_sphere	rs;
 
@@ -170,7 +120,8 @@ int	intersect_ray_sphere(t_ray *ray, t_sphere *sphere, float *t)
 ** the plane.
 */
 
-int	intersect_ray_tri(t_ray *ray, t_triangle *tri, float *res, t_vector *n)
+int			intersect_ray_tri(t_ray *ray, t_triangle *tri, float *res,
+		t_vector *n)
 {
 	t_ray_tri	r;
 

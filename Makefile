@@ -6,7 +6,7 @@
 #    By: daviwel <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/07/01 13:21:50 by daviwel           #+#    #+#              #
-#    Updated: 2016/07/15 19:11:06 by ddu-toit         ###   ########.fr        #
+#    Updated: 2016/07/15 23:29:49 by daviwel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,8 @@ SRC = $(PATH)main.c \
 	  $(PATH)shadow.c\
 	  $(PATH)set_structs.c\
 	  $(PATH)new_triangle.c\
+	  $(PATH)unrotate_vec2.c \
+	  $(PATH)solve_quadratic.c
 
 OBJ = $(SRC:.c=.o)
 
