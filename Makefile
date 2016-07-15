@@ -6,7 +6,7 @@
 #    By: daviwel <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/07/01 13:21:50 by daviwel           #+#    #+#              #
-#    Updated: 2016/07/15 23:29:49 by daviwel          ###   ########.fr        #
+#    Updated: 2016/07/15 23:46:52 by ddu-toit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC = $(PATH)main.c \
 	  $(PATH)intersect_ray_trace.c \
 	  $(PATH)get_input.c \
 	  $(PATH)count_types.c \
+	  $(PATH)get_cam.c \
 	  $(PATH)fill_spheres.c\
 	  $(PATH)fill_triangles.c\
 	  $(PATH)fill_lights.c\

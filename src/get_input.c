@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/05 09:29:51 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/15 06:58:00 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/15 23:41:05 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	get_input(t_env *env, char *file)
 	fdc = open(file, O_RDONLY);
 	count_types(&temp, fdc);
 	set_arrays(env, temp, fd);
+	get_cam(env, fd);
 	fill_materials(env, fd);
 	fill_lights(env, fd);
 	fill_spheres(env, fd);

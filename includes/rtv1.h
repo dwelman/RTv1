@@ -6,7 +6,7 @@
 /*   By: daviwel <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/01 08:09:54 by daviwel           #+#    #+#             */
-/*   Updated: 2016/07/15 23:29:24 by daviwel          ###   ########.fr       */
+/*   Updated: 2016/07/15 23:46:31 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,6 @@
 # define DEL_P vector_sub(&P, &PA)
 # define VEC_SQR(X) vector_dot(X, X)
 
-enum
-{
-	SPHERE = 1,
-	TRIANGLE,
-	CYLINDER
-};
-
 typedef struct	s_img
 {
 	void		*img;
@@ -83,9 +76,10 @@ typedef struct	s_obj
 	t_vector	normal;
 	t_vector	new_start;
 	t_col		col;
+	t_vector	cam_s;
+	t_vector	cam_dir;
+	t_vector	cam_rot;
 	float		ref_dist;
-	int			active_shape;
-	int			o;
 }				t_obj;
 
 typedef struct	s_env
@@ -143,6 +137,8 @@ void			sphere_raytrace(t_env *env);
 /*
 ** File Input
 */
+
+void			get_cam(t_env *env, int fd);
 
 void			fill_cone(t_env *env, int fd);
 

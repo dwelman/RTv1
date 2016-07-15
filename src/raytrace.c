@@ -6,7 +6,7 @@
 /*   By: ddu-toit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/07 07:24:50 by ddu-toit          #+#    #+#             */
-/*   Updated: 2016/07/15 13:15:52 by ddu-toit         ###   ########.fr       */
+/*   Updated: 2016/07/15 23:41:50 by ddu-toit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,10 @@ void				raytrace(t_env *env)
 		x = 0;
 		while (x <= WIN_X)
 		{
-			ray.start = new_vector(x, y, -2000);
-			ray.dir = new_vector(0, 0, 200);
+			ray.start = OBJ.cam_s;
+			ray.start.x += x;
+			ray.start.y += y;
+			ray.dir = OBJ.cam_dir;
 			vector_norm(&ray.dir);
 			set_col(&OBJ.col, 0, 0, 0);
 			env->br = 0;
